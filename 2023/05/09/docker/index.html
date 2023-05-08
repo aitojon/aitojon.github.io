@@ -16,15 +16,15 @@
   <meta name="author" content="AitoJon">
   <meta name="keywords" content="aitojon">
   
-    <meta name="description" content="docker三个基本概念容器（container）镜像（image）仓库（registry）· docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等。· **容器 **在镜像之上添加一个可读写层，构成一个新的容器。· 镜像仓库是一个集中的存储，分发镜像的服务。 Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux">
+    <meta name="description" content="Docker三个基本概念容器（container）镜像（image）仓库（registry）  docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等； 容器在镜像之上添加一个可读写层，构成一个新的容器； 镜像仓库是一个集中的存储，分发镜像的服务。  Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux内核限制进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于docker相关命令">
 <meta property="og:url" content="http://www.aitojon.com/2023/05/09/docker/index.html">
 <meta property="og:site_name" content="AitoJon">
-<meta property="og:description" content="docker三个基本概念容器（container）镜像（image）仓库（registry）· docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等。· **容器 **在镜像之上添加一个可读写层，构成一个新的容器。· 镜像仓库是一个集中的存储，分发镜像的服务。 Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux">
+<meta property="og:description" content="Docker三个基本概念容器（container）镜像（image）仓库（registry）  docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等； 容器在镜像之上添加一个可读写层，构成一个新的容器； 镜像仓库是一个集中的存储，分发镜像的服务。  Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux内核限制进程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-09T07:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-08T07:42:01.353Z">
+<meta property="article:modified_time" content="2023-05-08T13:31:48.861Z">
 <meta property="article:author" content="AitoJon">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="运维">
@@ -288,7 +288,12 @@
               <div class="markdown-body">
                 
                 <hr>
-<h4 id="docker三个基本概念"><a href="#docker三个基本概念" class="headerlink" title="docker三个基本概念"></a>docker三个基本概念</h4><p><strong>容器（container）镜像（image）仓库（registry）</strong><br>· <strong>docker镜像</strong>是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等。<br>· **容器 **在镜像之上添加一个可读写层，构成一个新的容器。<br>· <strong>镜像仓库</strong>是一个集中的存储，分发镜像的服务。</p>
+<h4 id="Docker三个基本概念"><a href="#Docker三个基本概念" class="headerlink" title="Docker三个基本概念"></a>Docker三个基本概念</h4><p><strong>容器（container）镜像（image）仓库（registry）</strong></p>
+<ul>
+<li><strong>docker镜像</strong>是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等；</li>
+<li><strong>容器</strong>在镜像之上添加一个可读写层，构成一个新的容器；</li>
+<li><strong>镜像仓库</strong>是一个集中的存储，分发镜像的服务。</li>
+</ul>
 <p><strong>Docker利用Namespace做资源隔离，用Cgroups做资源限制</strong>，Cgroups是Linux内核限制进程所使用资源的机制,可以对 cpu 内存等资源实现精细化控制。</p>
 <p><strong>Docker file</strong> 用来<strong>构建镜像的文本文件</strong>，文本内容包含了构建镜像所需的指令和说明。</p>
 <h4 id="Docker管理命令"><a href="#Docker管理命令" class="headerlink" title="Docker管理命令"></a>Docker管理命令</h4><table>
@@ -525,7 +530,7 @@
 <td align="left">根据Dockerfile打包制作镜像</td>
 </tr>
 </tbody></table>
-<h4 id="dockerfile关键字大全"><a href="#dockerfile关键字大全" class="headerlink" title="dockerfile关键字大全"></a>dockerfile关键字大全</h4><table>
+<h4 id="Dockerfile关键字大全"><a href="#Dockerfile关键字大全" class="headerlink" title="Dockerfile关键字大全"></a>Dockerfile关键字大全</h4><table>
 <thead>
 <tr>
 <th>关键字</th>
