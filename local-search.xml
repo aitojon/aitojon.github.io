@@ -35,7 +35,7 @@
     <link href="/2023/05/08/hub/"/>
     <url>/2023/05/08/hub/</url>
     
-    <content type="html"><![CDATA[<p>基于SL2.1A的mini-HUB TypeC输入 2A+2C输出</p><hr><p><img src="/img/hub.jpeg"></p>]]></content>
+    <content type="html"><![CDATA[<p>基于SL2.1A的mini-HUB TypeC输入 2A+2C输出</p><hr><p><img src="/img/hub.jpg"></p>]]></content>
     
     
     <categories>
@@ -52,6 +52,66 @@
       <tag>PCB</tag>
       
       <tag>制作</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>PWM四线风扇控制，12V转5V（2个USB-A，2个2.54座子）</title>
+    <link href="/2023/05/08/pwm/"/>
+    <url>/2023/05/08/pwm/</url>
+    
+    <content type="html"><![CDATA[<p>PWM四线风扇控制，12V转5V（2个USB-A，2个2.54座子）</p><hr><p><img src="/img/pwm.jpg"></p><p>MacBook 2017款，无风扇难过夏日炎炎，故此制作。</p><ul><li>基于GP9101-F20K-L2H1-SW作为ADC芯片，输出PWM控制四线电脑风扇；</li><li>将12V转5V给2个USB-A，2个2.54座子；</li><li>转3.3v、LED状态灯失败，等下一版完善。</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>兴趣</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>兴趣</tag>
+      
+      <tag>PCB</tag>
+      
+      <tag>制作</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>手搓键盘进度-78&amp;102系列</title>
+    <link href="/2023/04/09/keyboard/"/>
+    <url>/2023/04/09/keyboard/</url>
+    
+    <content type="html"><![CDATA[<p>手搓键盘进度-78&amp;102系列</p><hr><p><img src="/img/keyboard.jpg"><br>以上基于苹果Apple A1644、A1843，罗技K850、G613键盘矩阵制作。<br>Apple A1644：已测矩阵，Lightning口转TypeC口测试中；<br>Apple A1843：矩阵测试板已打，等待测试；<br>罗技K850：矩阵测试板已打，等待测试；<br>罗技G613：优先级不高，等闲情。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>兴趣</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>兴趣</tag>
+      
+      <tag>PCB</tag>
+      
+      <tag>制作</tag>
+      
+      <tag>键盘</tag>
       
     </tags>
     
