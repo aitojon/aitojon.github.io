@@ -16,28 +16,28 @@
   <meta name="author" content="AitoJon">
   <meta name="keywords" content="aitojon">
   
-    <meta name="description" content="前言浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G。 测试平台1： 系统：ikuai 3.7.0 主板：华擎Z370M PRO4 测试平台2： 系统：win 11 主板：华硕TUF GAMING B660M-PLUS WIFI D4 过程  用胶带屏蔽或刮断B10引脚，也就是3.3V待机引脚，这样就不会从3.3V待机引脚取电了；  短接末尾两根引脚，提高在家用">
+    <meta name="description" content="前言浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G，为万兆内网便宜大碗的选择，但万兆电口网卡天生发热大，待机功耗高的问题需要解决。 测试平台1：软路由 系统：ikuai 3.7.0 主板：华擎Z370M Pro4 测试平台2：内网测试机，nas 系统：PVE 7.4 主板：华擎Z370M Pro4 测试平台3：主力机 系统：win 11 主板：华硕TUF GA">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浪潮X540-T2 双10G网卡 功耗&amp;散热改造">
+<meta property="og:title" content="浪潮X540-T2 双10G网卡 功耗散热改造">
 <meta property="og:url" content="http://www.aitojon.com/2023/05/08/x540/index.html">
 <meta property="og:site_name" content="AitoJon">
-<meta property="og:description" content="前言浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G。 测试平台1： 系统：ikuai 3.7.0 主板：华擎Z370M PRO4 测试平台2： 系统：win 11 主板：华硕TUF GAMING B660M-PLUS WIFI D4 过程  用胶带屏蔽或刮断B10引脚，也就是3.3V待机引脚，这样就不会从3.3V待机引脚取电了；  短接末尾两根引脚，提高在家用">
+<meta property="og:description" content="前言浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G，为万兆内网便宜大碗的选择，但万兆电口网卡天生发热大，待机功耗高的问题需要解决。 测试平台1：软路由 系统：ikuai 3.7.0 主板：华擎Z370M Pro4 测试平台2：内网测试机，nas 系统：PVE 7.4 主板：华擎Z370M Pro4 测试平台3：主力机 系统：win 11 主板：华硕TUF GA">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.aitojon.com/img/X5401.jgp">
-<meta property="og:image" content="http://www.aitojon.com/img/X5404.jgp">
-<meta property="og:image" content="http://www.aitojon.com/img/X5402.jgp">
-<meta property="og:image" content="http://www.aitojon.com/img/X5403.jgp">
+<meta property="og:image" content="http://www.aitojon.com/img/X5401.jpg">
+<meta property="og:image" content="http://www.aitojon.com/img/X5404.jpg">
+<meta property="og:image" content="http://www.aitojon.com/img/X5402.jpg">
+<meta property="og:image" content="http://www.aitojon.com/img/X5403.jpg">
 <meta property="article:published_time" content="2023-05-08T07:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-09T01:09:49.849Z">
+<meta property="article:modified_time" content="2023-05-09T01:21:41.073Z">
 <meta property="article:author" content="AitoJon">
 <meta property="article:tag" content="兴趣">
 <meta property="article:tag" content="制作">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://www.aitojon.com/img/X5401.jgp">
+<meta name="twitter:image" content="http://www.aitojon.com/img/X5401.jpg">
   
   
   
-  <title>浪潮X540-T2 双10G网卡 功耗&amp;散热改造 - AitoJon</title>
+  <title>浪潮X540-T2 双10G网卡 功耗散热改造 - AitoJon</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +215,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="浪潮X540-T2 双10G网卡 功耗&amp;散热改造"></span>
+            <span id="subtitle" data-typed-text="浪潮X540-T2 双10G网卡 功耗散热改造"></span>
           
         </div>
 
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          365 字
+          464 字
         
       </span>
     
@@ -287,20 +287,23 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">浪潮X540-T2 双10G网卡 功耗&amp;散热改造</h1>
+            <h1 style="display: none">浪潮X540-T2 双10G网卡 功耗散热改造</h1>
             
             
               <div class="markdown-body">
                 
                 <hr>
-<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G。</p>
-<p>测试平台1：</p>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G，为万兆内网便宜大碗的选择，但万兆电口网卡天生发热大，待机功耗高的问题需要解决。</p>
+<p><strong>测试平台</strong>1：软路由</p>
 <p>系统：ikuai 3.7.0</p>
-<p>主板：华擎Z370M PRO4</p>
-<p>测试平台2：</p>
+<p>主板：华擎Z370M Pro4</p>
+<p><strong>测试平台</strong>2：内网测试机，nas</p>
+<p>系统：PVE 7.4</p>
+<p>主板：华擎Z370M Pro4</p>
+<p><strong>测试平台</strong>3：主力机</p>
 <p>系统：win 11</p>
 <p>主板：华硕TUF GAMING B660M-PLUS WIFI D4</p>
-<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/img/X5401.jgp" srcset="/img/loading.gif" lazyload></p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/img/X5401.jpg" srcset="/img/loading.gif" lazyload></p>
 <ol>
 <li><p>用胶带屏蔽或刮断B10引脚，也就是3.3V待机引脚，这样就不会从3.3V待机引脚取电了；</p>
 </li>
@@ -310,15 +313,14 @@
 </li>
 <li><p>后改5V散热风扇从3.3v取电，供电和转速兼顾；</p>
 </li>
-<li><p>将网卡供电从默认的3.3VSB跳线至3.3V上，解决一些主板3.3V供电不足，不能同时插两张浪潮X540-T2的问题。但改后网卡关机不通电，也就不能使用网络唤醒。即待机不发热，无待机功耗。</p>
-<p><img src="/img/X5404.jgp" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/img/X5402.jgp" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/img/X5403.jgp" srcset="/img/loading.gif" lazyload></p>
+<li><p>将网卡供电从默认的3.3VSB跳线至3.3V上，解决一些主板3.3V供电不足，不能同时插两张浪潮X540-T2的问题。但改后网卡关机不通电，也就不能使用网络唤醒。即待机不发热，无待机功耗。网络唤醒用主板自带千兆网络代替。</p>
+<p><img src="/img/X5404.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/X5402.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/X5403.jpg" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ol>
-<p>结果：</p>
-<ol>
-<li>两测试平台均正常识别2张网卡；</li>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><ol>
+<li>三个测试平台均正常识别2张网卡；</li>
 <li>待机不发热，无待机功耗。</li>
 </ol>
 
