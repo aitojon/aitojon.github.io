@@ -116,6 +116,33 @@
   
   
   <entry>
+    <title>浪潮X540-T2 双10G网卡 功耗&amp;散热改造</title>
+    <link href="/2023/05/08/x540/"/>
+    <url>/2023/05/08/x540/</url>
+    
+    <content type="html"><![CDATA[<hr><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G。</p><p>测试平台1：</p><p>系统：ikuai 3.7.0</p><p>主板：华擎Z370M PRO4</p><p>测试平台2：</p><p>系统：win 11</p><p>主板：华硕TUF GAMING B660M-PLUS WIFI D4</p><h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/img/X5401.jgp"></p><ol><li><p>用胶带屏蔽或刮断B10引脚，也就是3.3V待机引脚，这样就不会从3.3V待机引脚取电了；</p></li><li><p>短接末尾两根引脚，提高在家用主板兼容性；</p></li><li><p>裁断或屏蔽原X1，在家用主板上无用处，是服务器主板做检测用；</p></li><li><p>后改5V散热风扇从3.3v取电，供电和转速兼顾；</p></li><li><p>将网卡供电从默认的3.3VSB跳线至3.3V上，解决一些主板3.3V供电不足，不能同时插两张浪潮X540-T2的问题。但改后网卡关机不通电，也就不能使用网络唤醒。即待机不发热，无待机功耗。</p><p><img src="/img/X5404.jgp"></p><p><img src="/img/X5402.jgp"></p><p><img src="/img/X5403.jgp"></p></li></ol><p>结果：</p><ol><li>两测试平台均正常识别2张网卡；</li><li>待机不发热，无待机功耗。</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>兴趣</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>兴趣</tag>
+      
+      <tag>制作</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>手搓键盘进度-78&amp;102系列</title>
     <link href="/2023/04/09/keyboard/"/>
     <url>/2023/04/09/keyboard/</url>
