@@ -23,20 +23,15 @@
 <meta property="og:site_name" content="AitoJon">
 <meta property="og:description" content="前言想要一台NAS，看中了TrueNAS，但他的虚拟化功能太弱，常说的K3S。 那不如在PVE上安装TrueNAS，把TrueNAS作为物理硬盘的管理系统。将非系统盘的硬盘控制器直通给TrueNAS，由TrueNAS组ZFS池后用NFS共享，通过虚拟接口共享给PVE添加存储池，供PVE安装虚拟机时使用，能利用ZFS的快照功能，也能加强虚拟机的安全性。开启aio之路。 实验环境   类型 详细信息">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.aitojon.com/img/pvetruenas/vmbr.jpg">
-<meta property="og:image" content="http://www.aitojon.com/img/pvetruenas/truenas1.jpg">
-<meta property="og:image" content="http://www.aitojon.com/img/pvetruenas/truenas2.jpg">
-<meta property="og:image" content="http://www.aitojon.com/img/pvetruenas/truenas3.jpg">
-<meta property="og:image" content="http://www.aitojon.com/img/pvetruenas/truenas4.jpg">
-<meta property="og:image" content="http://www.aitojon.com/img/pvetruenas/iperf3.jpg">
+<meta property="og:image" content="http://www.aitojon.com/img/in/pvetruenasin.jpg">
 <meta property="article:published_time" content="2023-05-09T07:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-10T06:21:29.987Z">
+<meta property="article:modified_time" content="2023-05-10T09:39:41.176Z">
 <meta property="article:author" content="AitoJon">
 <meta property="article:tag" content="运维">
 <meta property="article:tag" content="PVE">
 <meta property="article:tag" content="TrueNAS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://www.aitojon.com/img/pvetruenas/vmbr.jpg">
+<meta name="twitter:image" content="http://www.aitojon.com/img/in/pvetruenasin.jpg">
   
   
   
@@ -351,20 +346,20 @@
 </tr>
 </tbody></table>
 <h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h5 id="1、创建网桥"><a href="#1、创建网桥" class="headerlink" title="1、创建网桥"></a>1、创建网桥</h5><p>创建的网桥不桥接任何网口，作为一个虚拟接口，用于TrueNAS和Proxmox nfs通信。（最高可以达40G的带宽）</p>
-<p><img src="/img/pvetruenas/vmbr.jpg" srcset="/img/loading.gif" lazyload alt="vmbr"></p>
+<p><img src="/img/post/pvetruenas/vmbr.jpg" srcset="/img/loading.gif" lazyload></p>
 <h5 id="2、开启iommu"><a href="#2、开启iommu" class="headerlink" title="2、开启iommu"></a>2、开启iommu</h5><p>在&#x2F;etc&#x2F;default&#x2F;grub的启动行，添加intel_iommu&#x3D;on</p>
 <p>随后进行update-grub，<br>再进行 ，update-initramfs -u，重启生效。</p>
 <h5 id="3、创建TrueNAS"><a href="#3、创建TrueNAS" class="headerlink" title="3、创建TrueNAS"></a>3、创建TrueNAS</h5><p>创建的时候，内存给够，以8G+1T1G的标准。机器类型选Q35，网络设备添加时选virtlo半虚拟化。如下图</p>
-<p><img src="/img/pvetruenas/truenas1.jpg" srcset="/img/loading.gif" lazyload alt="truenas1"></p>
+<p><img src="/img/post/pvetruenas/truenas1.jpg" srcset="/img/loading.gif" lazyload></p>
 <h5 id="4、直通板载SATA控制器给TrueNAS"><a href="#4、直通板载SATA控制器给TrueNAS" class="headerlink" title="4、直通板载SATA控制器给TrueNAS"></a>4、直通板载SATA控制器给TrueNAS</h5><p>注意，板载SATA名一般是芯片组+sata controller，不要把PVE系统盘直通给TrueNAS。</p>
-<p><img src="/img/pvetruenas/truenas2.jpg" srcset="/img/loading.gif" lazyload alt="truenas2"></p>
-<h5 id="5、配置TrueNAS-IP"><a href="#5、配置TrueNAS-IP" class="headerlink" title="5、配置TrueNAS IP"></a>5、配置TrueNAS IP</h5><p><img src="/img/pvetruenas/truenas3.jpg" srcset="/img/loading.gif" lazyload alt="truenas3"></p>
-<p><img src="/img/pvetruenas/truenas4.jpg" srcset="/img/loading.gif" lazyload alt="truenas4"></p>
+<p><img src="/img/post/pvetruenas/truenas2.jpg" srcset="/img/loading.gif" lazyload></p>
+<h5 id="5、配置TrueNAS-IP"><a href="#5、配置TrueNAS-IP" class="headerlink" title="5、配置TrueNAS IP"></a>5、配置TrueNAS IP</h5><p><img src="/img/post/pvetruenas/truenas3.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvetruenas/truenas4.jpg" srcset="/img/loading.gif" lazyload></p>
 <h1 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h1><p>先在pve上安装iperf3，apt install iperf3  -y</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@aitojon::~# iperf3 -s<br>-----------------------------------------------------------<br>Server listening on 5201<br>-----------------------------------------------------------<br></code></pre></td></tr></table></figure>
 
 <p>iperf3已经集成在了TrueNAS上，可以直接使用</p>
-<p><img src="/img/pvetruenas/iperf3.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvetruenas/iperf3.jpg" srcset="/img/loading.gif" lazyload></p>
 <p>测试结果有38.6G的带宽</p>
 <p>大概是25块HDD才能达到，对普通用户不会有瓶颈。</p>
 
