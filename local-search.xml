@@ -58,6 +58,35 @@
   
   
   <entry>
+    <title>PVE+TrueNAS+ZFS+虚拟网桥可行性方案</title>
+    <link href="/2023/05/09/truenaszfs/"/>
+    <url>/2023/05/09/truenaszfs/</url>
+    
+    <content type="html"><![CDATA[<hr><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>想要一台NAS，看中了TrueNAS，但他的虚拟化功能太弱，常说的K3S。</p><p>那不如在PVE上安装TrueNAS，把TrueNAS作为物理硬盘的管理系统。将非系统盘的硬盘控制器直通给TrueNAS，由TrueNAS组ZFS池后用NFS共享，通过虚拟接口共享给PVE添加存储池，供PVE安装虚拟机时使用，能利用ZFS的快照功能，也能加强虚拟机的安全性。开启aio之路。</p><h1 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h1><table><thead><tr><th>类型</th><th>详细信息</th></tr></thead><tbody><tr><td>CPU</td><td>I5 8400</td></tr><tr><td>主板</td><td>华擎 Z370M Pro4</td></tr><tr><td>内存</td><td>64G</td></tr><tr><td>板载M.2</td><td>西数 SN770、512G</td></tr><tr><td>板载SATA</td><td>4T*3</td></tr><tr><td>PVE版本</td><td>7.4</td></tr><tr><td>TrueNAS版本</td><td>22.12.2</td></tr></tbody></table><h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h5 id="1、创建网桥"><a href="#1、创建网桥" class="headerlink" title="1、创建网桥"></a>1、创建网桥</h5><p>创建的网桥不桥接任何网口，作为一个虚拟接口，用于TrueNAS和Proxmox nfs通信。（最高可以达40G的带宽）</p><p><img src="/img/pvetruenas/vmbr.jpg" alt="vmbr"></p><h5 id="2、开启iommu"><a href="#2、开启iommu" class="headerlink" title="2、开启iommu"></a>2、开启iommu</h5><p>在&#x2F;etc&#x2F;default&#x2F;grub的启动行，添加intel_iommu&#x3D;on</p><p>随后进行update-grub，<br>再进行 ，update-initramfs -u，重启生效。</p><h5 id="3、创建TrueNAS"><a href="#3、创建TrueNAS" class="headerlink" title="3、创建TrueNAS"></a>3、创建TrueNAS</h5><p>创建的时候，内存给够，以8G+1T1G的标准。机器类型选Q35，网络设备添加时选virtlo半虚拟化。如下图</p><p><img src="/img/pvetruenas/truenas1.jpg" alt="truenas1"></p><h5 id="4、直通板载SATA控制器给TrueNAS"><a href="#4、直通板载SATA控制器给TrueNAS" class="headerlink" title="4、直通板载SATA控制器给TrueNAS"></a>4、直通板载SATA控制器给TrueNAS</h5><p>注意，板载SATA名一般是芯片组+sata controller，不要把PVE系统盘直通给TrueNAS。</p><p><img src="/img/pvetruenas/truenas2.jpg" alt="truenas2"></p><h5 id="5、配置TrueNAS-IP"><a href="#5、配置TrueNAS-IP" class="headerlink" title="5、配置TrueNAS IP"></a>5、配置TrueNAS IP</h5><p><img src="/img/pvetruenas/truenas3.jpg" alt="truenas3"></p><p><img src="/img/pvetruenas/truenas4.jpg" alt="truenas4"></p><h1 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h1><p>先在pve上安装iperf3，apt install iperf3  -y</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@aitojon::~# iperf3 -s<br>-----------------------------------------------------------<br>Server listening on 5201<br>-----------------------------------------------------------<br></code></pre></td></tr></table></figure><p>iperf3已经集成在了TrueNAS上，可以直接使用</p><p><img src="/img/pvetruenas/iperf3.jpg"></p><p>测试结果有38.6G的带宽</p><p>大概是25块HDD才能达到，对普通用户不会有瓶颈。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>运维</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>运维</tag>
+      
+      <tag>PVE</tag>
+      
+      <tag>TrueNAS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>基于SL2.1A的mini-HUB TypeC输入 2A+2C输出</title>
     <link href="/2023/05/08/hub/"/>
     <url>/2023/05/08/hub/</url>
@@ -120,7 +149,7 @@
     <link href="/2023/05/08/x540/"/>
     <url>/2023/05/08/x540/</url>
     
-    <content type="html"><![CDATA[<hr><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G，为万兆内网便宜大碗的选择，但万兆电口网卡天生发热大，待机功耗高的问题需要解决。</p><p><strong>测试平台</strong>1：软路由</p><p>系统：ikuai 3.7.0</p><p>主板：华擎Z370M Pro4</p><p><strong>测试平台</strong>2：内网测试机，nas</p><p>系统：PVE 7.4</p><p>主板：华擎Z370M Pro4</p><p><strong>测试平台</strong>3：主力机</p><p>系统：win 11</p><p>主板：华硕TUF GAMING B660M-PLUS WIFI D4</p><h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/img/X5401.jpg"></p><ol><li><p>用胶带屏蔽或刮断B10引脚，也就是3.3V待机引脚，这样就不会从3.3V待机引脚取电了；</p></li><li><p>短接末尾两根引脚，提高在家用主板兼容性；</p></li><li><p>裁断或屏蔽原X1，在家用主板上无用处，是服务器主板做检测用；</p></li><li><p>后改5V散热风扇从3.3v取电，供电和转速兼顾；</p></li><li><p>将网卡供电从默认的3.3VSB跳线至3.3V上，解决一些主板3.3V供电不足，不能同时插两张浪潮X540-T2的问题。但改后网卡关机不通电，也就不能使用网络唤醒。即待机不发热，无待机功耗。网络唤醒用主板自带千兆网络代替。</p><p><img src="/img/X5404.jpg"></p><p><img src="/img/X5402.jpg"></p><p><img src="/img/X5403.jpg"></p></li></ol><h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><ol><li>三个测试平台均正常识别2张网卡；</li><li>待机不发热，无待机功耗。</li></ol>]]></content>
+    <content type="html"><![CDATA[<hr><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>浪潮X540-T2，双10G，支持1G&#x2F;10G网络，不支持2.5G和5G，为万兆内网便宜大碗的选择，但万兆电口网卡天生发热大，待机功耗高的问题需要解决。</p><p><strong>测试平台</strong>1：软路由</p><p>系统：ikuai 3.7.0</p><p>主板：华擎Z370M Pro4</p><p><strong>测试平台</strong>2：内网测试机，nas</p><p>系统：PVE 7.4</p><p>主板：华擎Z370M Pro4</p><p><strong>测试平台</strong>3：主力机</p><p>系统：win 11</p><p>主板：华硕TUF GAMING B660M-PLUS WIFI D4</p><h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p><img src="/img/X540/X5401.jpg"></p><ol><li><p>用胶带屏蔽或刮断B10引脚，也就是3.3V待机引脚，这样就不会从3.3V待机引脚取电了；</p></li><li><p>短接末尾两根引脚，提高在家用主板兼容性；</p></li><li><p>裁断或屏蔽原X1，在家用主板上无用处，是服务器主板做检测用；</p></li><li><p>后改5V散热风扇从3.3v取电，供电和转速兼顾；</p></li><li><p>将网卡供电从默认的3.3VSB跳线至3.3V上，解决一些主板3.3V供电不足，不能同时插两张浪潮X540-T2的问题。但改后网卡关机不通电，也就不能使用网络唤醒。即待机不发热，无待机功耗。网络唤醒用主板自带千兆网络代替。</p><p><img src="/img/X540/X5404.jpg"></p><p><img src="/img/X540/X5402.jpg"></p><p><img src="/img/X540/X5403.jpg"></p></li></ol><h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><ol><li>三个测试平台均正常识别2张网卡；</li><li>待机不发热，无待机功耗。</li></ol>]]></content>
     
     
     <categories>
