@@ -16,25 +16,26 @@
   <meta name="author" content="AitoJon">
   <meta name="keywords" content="aitojon">
   
-    <meta name="description" content="Docker三个基本概念容器（container）镜像（image）仓库（registry）  Docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等； 容器在镜像之上添加一个可读写层，构成一个新的容器； 镜像仓库是一个集中的存储，分发镜像的服务。  Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux内核限制进程">
+    <meta name="description" content="去除系统及内核版本登陆前的屏幕显示12[root@centos1 ~]# cat &#x2F;etc&#x2F;issue  #清空&#x2F;etc&#x2F;issue[root@centos1 ~]#   时间同步12345#启动chronyd服务[root@centos1 ~]systemctl start chronyd[root@centos1 ~]systemctl enable chronyd[root@centos1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Docker相关命令">
-<meta property="og:url" content="http://www.aitojon.com/2023/05/09/docker/index.html">
+<meta property="og:title" content="centos7新装后一些配置">
+<meta property="og:url" content="http://www.aitojon.com/2023/05/10/ncentos7/index.html">
 <meta property="og:site_name" content="AitoJon">
-<meta property="og:description" content="Docker三个基本概念容器（container）镜像（image）仓库（registry）  Docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等； 容器在镜像之上添加一个可读写层，构成一个新的容器； 镜像仓库是一个集中的存储，分发镜像的服务。  Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux内核限制进程">
+<meta property="og:description" content="去除系统及内核版本登陆前的屏幕显示12[root@centos1 ~]# cat &#x2F;etc&#x2F;issue  #清空&#x2F;etc&#x2F;issue[root@centos1 ~]#   时间同步12345#启动chronyd服务[root@centos1 ~]systemctl start chronyd[root@centos1 ~]systemctl enable chronyd[root@centos1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.aitojon.com/img/in/dockerin.jpg">
-<meta property="article:published_time" content="2023-05-09T07:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-10T09:18:05.037Z">
+<meta property="og:image" content="http://www.aitojon.com/img/in/ncentos7in.jpg">
+<meta property="article:published_time" content="2023-05-10T07:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-17T14:04:51.505Z">
 <meta property="article:author" content="AitoJon">
-<meta property="article:tag" content="docker">
 <meta property="article:tag" content="运维">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="配置">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://www.aitojon.com/img/in/dockerin.jpg">
+<meta name="twitter:image" content="http://www.aitojon.com/img/in/ncentos7in.jpg">
   
   
   
-  <title>关于Docker相关命令 - AitoJon</title>
+  <title>centos7新装后一些配置 - AitoJon</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="关于Docker相关命令"></span>
+            <span id="subtitle" data-typed-text="centos7新装后一些配置"></span>
           
         </div>
 
@@ -239,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-09 15:00" pubdate>
-          2023年5月9日 下午
+        <time datetime="2023-05-10 15:00" pubdate>
+          2023年5月10日 下午
         </time>
       </span>
     
@@ -251,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          1.9k 字
         
       </span>
     
@@ -262,7 +263,7 @@
         
         
         
-          21 分钟
+          17 分钟
         
       </span>
     
@@ -300,354 +301,24 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">关于Docker相关命令</h1>
+            <h1 style="display: none">centos7新装后一些配置</h1>
             
             
               <div class="markdown-body">
                 
                 <hr>
-<h4 id="Docker三个基本概念"><a href="#Docker三个基本概念" class="headerlink" title="Docker三个基本概念"></a>Docker三个基本概念</h4><p><strong>容器（container）镜像（image）仓库（registry）</strong></p>
-<ul>
-<li><strong>Docker镜像</strong>是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等；</li>
-<li><strong>容器</strong>在镜像之上添加一个可读写层，构成一个新的容器；</li>
-<li><strong>镜像仓库</strong>是一个集中的存储，分发镜像的服务。</li>
-</ul>
-<p><strong>Docker利用Namespace做资源隔离，用Cgroups做资源限制</strong>，Cgroups是Linux内核限制进程所使用资源的机制,可以对 cpu 内存等资源实现精细化控制。</p>
-<p><strong>Docker file</strong> 用来<strong>构建镜像的文本文件</strong>，文本内容包含了构建镜像所需的指令和说明。</p>
-<h4 id="Docker管理命令"><a href="#Docker管理命令" class="headerlink" title="Docker管理命令"></a>Docker管理命令</h4><table>
-<thead>
-<tr>
-<th align="left">命令格式</th>
-<th align="left">参数选项</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">docker info</td>
-<td align="left"></td>
-<td align="left">查看 docker 的运行信息</td>
-</tr>
-<tr>
-<td align="left">docker version</td>
-<td align="left"></td>
-<td align="left">查看服务器和客户端版本</td>
-</tr>
-<tr>
-<td align="left">docker images</td>
-<td align="left"></td>
-<td align="left">查看本机镜像</td>
-</tr>
-<tr>
-<td align="left">docker search 关键字</td>
-<td align="left"></td>
-<td align="left">从官方仓库查找镜像</td>
-</tr>
-<tr>
-<td align="left">docker pull</td>
-<td align="left"></td>
-<td align="left">下载镜像</td>
-</tr>
-<tr>
-<td align="left">docker push</td>
-<td align="left"></td>
-<td align="left">上传镜像</td>
-</tr>
-<tr>
-<td align="left">docker login</td>
-<td align="left"></td>
-<td align="left">登录镜像仓库</td>
-</tr>
-<tr>
-<td align="left">docker logout</td>
-<td align="left"></td>
-<td align="left">登出镜像仓库</td>
-</tr>
-<tr>
-<td align="left">docker save -o backup.tar</td>
-<td align="left">-o 备份文件名</td>
-<td align="left">备份镜像为tar包</td>
-</tr>
-<tr>
-<td align="left">docker load -i backup.tar</td>
-<td align="left">-i 备份文件名</td>
-<td align="left">导入备份的镜像文件</td>
-</tr>
-<tr>
-<td align="left">docker history</td>
-<td align="left">–no-trunc 完整显示</td>
-<td align="left">查看镜像的制作历史</td>
-</tr>
-<tr>
-<td align="left">docker inspect</td>
-<td align="left">-f 指定具体节点</td>
-<td align="left">查看对象的详细信息</td>
-</tr>
-<tr>
-<td align="left">docker tag</td>
-<td align="left"></td>
-<td align="left">创建新的镜像名称和标签</td>
-</tr>
-<tr>
-<td align="left">docker rmi</td>
-<td align="left"></td>
-<td align="left">删除镜像</td>
-</tr>
-<tr>
-<td align="left">docker run</td>
-<td align="left">-i 交互式，-t 分配终端</td>
-<td align="left">运行一个新容器</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-d 放在后台运行</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–rm 临时容器，容器结束后会被删除</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-h 主机名，-e 变量</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–name 容器名</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–restart&#x3D;[no,always]</td>
-<td align="left">容器重启策略</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–link 容器名:别名</td>
-<td align="left">添加 hosts 解析</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-m, –cpus, –cpuset-cpus</td>
-<td align="left">设置内存、cpu使用限制及亲和性</td>
-</tr>
-<tr>
-<td align="left">docker create</td>
-<td align="left">参数同 docker run</td>
-<td align="left">创建容器，但不启动运行</td>
-</tr>
-<tr>
-<td align="left">docker ps</td>
-<td align="left">-a 显示所有容器</td>
-<td align="left">查看容器进程</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-q 只显示容器id</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">docker rm</td>
-<td align="left">-f 强制删除</td>
-<td align="left">删除容器</td>
-</tr>
-<tr>
-<td align="left">docker start|stop|restart</td>
-<td align="left"></td>
-<td align="left">启动、停止、重启容器</td>
-</tr>
-<tr>
-<td align="left">docker cp</td>
-<td align="left"></td>
-<td align="left">拷贝文件到容器&#x2F;从容器拷贝文件</td>
-</tr>
-<tr>
-<td align="left">docker exec -it</td>
-<td align="left"></td>
-<td align="left">进入容器内，启动新进程</td>
-</tr>
-<tr>
-<td align="left">docker attach</td>
-<td align="left">[ctrl+p, ctrl+q] 退出，不会终止容器</td>
-<td align="left">进入一个容器的启动程序</td>
-</tr>
-<tr>
-<td align="left">docker logs</td>
-<td align="left"></td>
-<td align="left">查看容器终端显示信息</td>
-</tr>
-<tr>
-<td align="left">docker port</td>
-<td align="left"></td>
-<td align="left">查看容器的端口映射信息</td>
-</tr>
-<tr>
-<td align="left">docker kill</td>
-<td align="left">–signal&#x3D;信号名称</td>
-<td align="left">像容器发送信号</td>
-</tr>
-<tr>
-<td align="left">docker pause</td>
-<td align="left"></td>
-<td align="left">暂停容器</td>
-</tr>
-<tr>
-<td align="left">docker unpause</td>
-<td align="left"></td>
-<td align="left">恢复暂停的容器</td>
-</tr>
-<tr>
-<td align="left">docker update</td>
-<td align="left">不能超过 –memory-swap 的值，-1表示无限</td>
-<td align="left">更改容器配置策略（资源限制）</td>
-</tr>
-<tr>
-<td align="left">docker stats</td>
-<td align="left"></td>
-<td align="left">查看容器对资源的占用情况</td>
-</tr>
-<tr>
-<td align="left">docker top</td>
-<td align="left"></td>
-<td align="left">查看容器内运行的进程</td>
-</tr>
-<tr>
-<td align="left">docker diff</td>
-<td align="left">A 增加、D 删除、C 变化</td>
-<td align="left">根据镜像排查文件系统变化</td>
-</tr>
-<tr>
-<td align="left">docker wait</td>
-<td align="left"></td>
-<td align="left">阻塞直到容器停止，返回退出码</td>
-</tr>
-<tr>
-<td align="left">docker rename <c_name> <n_name></td>
-<td align="left"></td>
-<td align="left">改变容器名称</td>
-</tr>
-<tr>
-<td align="left">docker export</td>
-<td align="left">-o 备份文件名</td>
-<td align="left">备份容器的 &#x2F; 目录为 tar 文件</td>
-</tr>
-<tr>
-<td align="left">docker import backup.tar</td>
-<td align="left">-c 可以指定Dockerfile语法的命令</td>
-<td align="left">导入文件到空 &#x2F; 目录，没有任何配置</td>
-</tr>
-<tr>
-<td align="left">docker commit</td>
-<td align="left"></td>
-<td align="left">把容器做成镜像</td>
-</tr>
-<tr>
-<td align="left">docker build</td>
-<td align="left">-f 可以指定 dockerfile 的文件名称</td>
-<td align="left">根据Dockerfile打包制作镜像</td>
-</tr>
-</tbody></table>
-<h4 id="Dockerfile关键字大全"><a href="#Dockerfile关键字大全" class="headerlink" title="Dockerfile关键字大全"></a>Dockerfile关键字大全</h4><table>
-<thead>
-<tr>
-<th>关键字</th>
-<th>作用</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FROM</td>
-<td>指定父镜像</td>
-<td>指定dockerfile基于那个image构建</td>
-</tr>
-<tr>
-<td>MAINTAINER</td>
-<td>作者信息</td>
-<td>声明作者信息</td>
-</tr>
-<tr>
-<td>LABEL</td>
-<td>标签</td>
-<td>和MAINTAINER类似，用来标明dockerfile的标签，可以使用Label代替Maintainer，最终都是在docker image基本信息中可以查看</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td>执行命令</td>
-<td>执行一段命令 默认是&#x2F;bin&#x2F;sh</td>
-</tr>
-<tr>
-<td>CMD</td>
-<td>容器启动命令</td>
-<td>提供启动容器时候的默认命令和ENTRYPOINT配合使用</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td>入口</td>
-<td>一般在制作一些执行就关闭的容器中会使用</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td>复制文件</td>
-<td>build的时候复制文件到image中。推荐copy指令，只能执行docker build所在主机上读取复制资源到镜像。add复制文件可以可以来源于远程链接，如果是压缩文件还会自动解压</td>
-</tr>
-<tr>
-<td>ADD</td>
-<td>添加文件</td>
-<td>build的时候添加文件到image中，不仅仅局限于当前build上下文 可以来源于远程服务</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td>环境变量</td>
-<td>指定build时候的环境变量 可以在启动的容器的时候 通过-e覆盖</td>
-</tr>
-<tr>
-<td>ARG</td>
-<td>构建参数</td>
-<td>构建参数，只在构建的时候使用的参数。如果有ENV，那么ENV的相同名字的值始终覆盖arg的参数</td>
-</tr>
-<tr>
-<td>VOLUME</td>
-<td>定义外部可以挂载的数据卷</td>
-<td>指定build的image那些目录可以启动的时候挂载到文件系统中，启动容器的时候使用 -v 绑定</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td>暴露端口</td>
-<td>定义容器运行的时候监听的端口，启动容器的使用-p来绑定暴露端口。格式: EXPOSE 8080 或者 EXPOSE 8080&#x2F;udp</td>
-</tr>
-<tr>
-<td>WORKDIR</td>
-<td>工作目录</td>
-<td>指定容器内部的工作目录，如果没有创建则自动创建。如果指定&#x2F; 使用的是绝对地址 如果不是&#x2F;开头那么是在上一条workdir的路径的相对路径</td>
-</tr>
-<tr>
-<td>USER</td>
-<td>指定执行用户</td>
-<td>指定build或者启动的时候，用户 在RUN CMD ENTRYPONT执行的时候的用户</td>
-</tr>
-<tr>
-<td>HEALTHCHECK</td>
-<td>健康检查</td>
-<td>指定监测当前容器的健康监测的命令，基本上没用，因为很多时候，应用本身有健康监测机制</td>
-</tr>
-<tr>
-<td>ONBUILD</td>
-<td>触发器</td>
-<td>当存在ONBUILD关键字的镜像作为基础镜像的时候，当执行FROM完成之后，会执行 ONBUILD的命令，但是不影响当前镜像，用处也不怎么大</td>
-</tr>
-<tr>
-<td>STOPSIGNAL</td>
-<td>发送信号量到宿主机</td>
-<td>该STOPSIGNAL指令设置将发送到容器的系统调用信号以退出。</td>
-</tr>
-<tr>
-<td>SHELL</td>
-<td>指定执行脚本的shell</td>
-<td>指定RUN CMD ENTRYPOINT 执行命令的时候 使用的shell</td>
-</tr>
-</tbody></table>
+<h3 id="去除系统及内核版本登陆前的屏幕显示"><a href="#去除系统及内核版本登陆前的屏幕显示" class="headerlink" title="去除系统及内核版本登陆前的屏幕显示"></a>去除系统及内核版本登陆前的屏幕显示</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# cat /etc/issue  #清空/etc/issue<br>[root@centos1 ~]# <br></code></pre></td></tr></table></figure>
 
+<h3 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">启动chronyd服务</span><br>[root@centos1 ~]systemctl start chronyd<br>[root@centos1 ~]systemctl enable chronyd<br>[root@centos1 ~]date<br>注意：执行命令前 可以 使用 rpm -qa |grep chrony 查看系统是否已安装chrony，没有安装环境可使用 yum install chrony 命令安装<br></code></pre></td></tr></table></figure>
+
+<h3 id="禁用selinux和firewalld服务"><a href="#禁用selinux和firewalld服务" class="headerlink" title="禁用selinux和firewalld服务"></a>禁用selinux和firewalld服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# systemctl stop firewalld<br>[root@centos1 ~]# systemctl disable firewalld<br>Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.<br>Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.<br>[root@centos1 ~]# sed -i &#x27;s/enforcing/disabled/&#x27; /etc/selinux/config<br></code></pre></td></tr></table></figure>
+
+<h3 id="禁用swap分区（K8s用）"><a href="#禁用swap分区（K8s用）" class="headerlink" title="禁用swap分区（K8s用）"></a>禁用swap分区（K8s用）</h3><p>  注：swap分区指的是虚拟内存分区，它的作用是物理内存使用完，之后将磁盘空间虚拟成内存来使用，启用swap设备会对系统的性能产生非常负面的影响，因此kubernetes要求每个节点都要禁用swap设备，但是如果因为某些原因确实不能关闭swap分区，就需要在集群安装过程中通过明确的参数进行配置说明</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# vi /etc/fstab <br><span class="hljs-meta prompt_">#</span><span class="language-bash">注释掉下面的设置</span><br>/dev/mapper/centos-swap swap<br></code></pre></td></tr></table></figure>
+
+<h3 id="网卡配置"><a href="#网卡配置" class="headerlink" title="网卡配置"></a>网卡配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# nmcli connection show<br>NAME   UUID                                  TYPE      DEVICE <br>ens33  c96bc909-188e-ec64-3a96-6a90982b08ad  ethernet  ens33  <br>[root@centos1 ~]# vi /etc/sysconfig/network-scripts/ifcfg-ens33<br>TYPE=&quot;Ethernet&quot;            # 网络类型为以太网      <br>BOOTPROTO=&quot;none&quot;           # IP地址是静态配置的，也可以用static<br>NAME=&quot;ens33&quot;               # 为设备重命名<br>DEVICE=&quot;ens33&quot;             # 网卡设备名<br>ONBOOT=&quot;yes&quot;               # 开机激活网卡<br>IPADDR=192.168.2.200       # IP地址<br>NETMASK=255.255.255.0      #子网掩码<br>GATEWAY=192.168.2.1        #网关<br>DNS1=114.114.114.114       <br>DNS2=8.8.8.8<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置阿里yum源"><a href="#配置阿里yum源" class="headerlink" title="配置阿里yum源"></a>配置阿里yum源</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# ls /etc/yum.repos.d/<br>  CentOS-Base.repo  CentOS-CR.repo  CentOS-Debuginfo.repo  CentOS-fasttrack.repo  CentOS-Media.repo  CentOS-Sources.repo  CentOS-Vault.repo  CentOS-x86_64-kernel.repo<br>[root@centos1 ~]# rm -rf /etc/yum.repos.d/*<br>[root@centos1 ~]# ls /etc/yum.repos.d/<br>[root@centos1 ~]# curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo<br>    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current<br>                                   Dload  Upload   Total   Spent    Left  Speed<br>  100  2523  100  2523    0     0   7317      0 --:--:-- --:--:-- --:--:--  7334<br>[root@centos1 ~]# yum clean all<br>  已加载插件：fastestmirror<br>  正在清理软件源： base extras updates<br>  [root@centos1 ~]# yum repolist -y<br> 已加载插件：fastestmirror<br> ....<br>repolist: 15,513<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -680,9 +351,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/docker/">#docker</a>
-      
         <a href="/tags/%E8%BF%90%E7%BB%B4/">#运维</a>
+      
+        <a href="/tags/centos/">#centos</a>
+      
+        <a href="/tags/%E9%85%8D%E7%BD%AE/">#配置</a>
       
     </div>
   
@@ -696,9 +369,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/10/ncentos7/" title="centos7新装后一些配置">
+                      <a href="/2023/05/10/jenkinsgitlab/" title="Jenkins+gitlab部署参考过程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">centos7新装后一些配置</span>
+                        <span class="hidden-mobile">Jenkins+gitlab部署参考过程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -706,8 +379,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/09/upgradenginx/" title="Nginx平滑升级，不停服。虚拟机和docker环境下">
-                        <span class="hidden-mobile">Nginx平滑升级，不停服。虚拟机和docker环境下</span>
+                      <a href="/2023/05/09/docker/" title="关于Docker相关命令">
+                        <span class="hidden-mobile">关于Docker相关命令</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

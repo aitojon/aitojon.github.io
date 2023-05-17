@@ -35,6 +35,35 @@
   
   
   <entry>
+    <title>centos7新装后一些配置</title>
+    <link href="/2023/05/10/ncentos7/"/>
+    <url>/2023/05/10/ncentos7/</url>
+    
+    <content type="html"><![CDATA[<hr><h3 id="去除系统及内核版本登陆前的屏幕显示"><a href="#去除系统及内核版本登陆前的屏幕显示" class="headerlink" title="去除系统及内核版本登陆前的屏幕显示"></a>去除系统及内核版本登陆前的屏幕显示</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# cat /etc/issue  #清空/etc/issue<br>[root@centos1 ~]# <br></code></pre></td></tr></table></figure><h3 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">启动chronyd服务</span><br>[root@centos1 ~]systemctl start chronyd<br>[root@centos1 ~]systemctl enable chronyd<br>[root@centos1 ~]date<br>注意：执行命令前 可以 使用 rpm -qa |grep chrony 查看系统是否已安装chrony，没有安装环境可使用 yum install chrony 命令安装<br></code></pre></td></tr></table></figure><h3 id="禁用selinux和firewalld服务"><a href="#禁用selinux和firewalld服务" class="headerlink" title="禁用selinux和firewalld服务"></a>禁用selinux和firewalld服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# systemctl stop firewalld<br>[root@centos1 ~]# systemctl disable firewalld<br>Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.<br>Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.<br>[root@centos1 ~]# sed -i &#x27;s/enforcing/disabled/&#x27; /etc/selinux/config<br></code></pre></td></tr></table></figure><h3 id="禁用swap分区（K8s用）"><a href="#禁用swap分区（K8s用）" class="headerlink" title="禁用swap分区（K8s用）"></a>禁用swap分区（K8s用）</h3><p>  注：swap分区指的是虚拟内存分区，它的作用是物理内存使用完，之后将磁盘空间虚拟成内存来使用，启用swap设备会对系统的性能产生非常负面的影响，因此kubernetes要求每个节点都要禁用swap设备，但是如果因为某些原因确实不能关闭swap分区，就需要在集群安装过程中通过明确的参数进行配置说明</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# vi /etc/fstab <br><span class="hljs-meta prompt_">#</span><span class="language-bash">注释掉下面的设置</span><br>/dev/mapper/centos-swap swap<br></code></pre></td></tr></table></figure><h3 id="网卡配置"><a href="#网卡配置" class="headerlink" title="网卡配置"></a>网卡配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# nmcli connection show<br>NAME   UUID                                  TYPE      DEVICE <br>ens33  c96bc909-188e-ec64-3a96-6a90982b08ad  ethernet  ens33  <br>[root@centos1 ~]# vi /etc/sysconfig/network-scripts/ifcfg-ens33<br>TYPE=&quot;Ethernet&quot;            # 网络类型为以太网      <br>BOOTPROTO=&quot;none&quot;           # IP地址是静态配置的，也可以用static<br>NAME=&quot;ens33&quot;               # 为设备重命名<br>DEVICE=&quot;ens33&quot;             # 网卡设备名<br>ONBOOT=&quot;yes&quot;               # 开机激活网卡<br>IPADDR=192.168.2.200       # IP地址<br>NETMASK=255.255.255.0      #子网掩码<br>GATEWAY=192.168.2.1        #网关<br>DNS1=114.114.114.114       <br>DNS2=8.8.8.8<br></code></pre></td></tr></table></figure><h3 id="配置阿里yum源"><a href="#配置阿里yum源" class="headerlink" title="配置阿里yum源"></a>配置阿里yum源</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@centos1 ~]# ls /etc/yum.repos.d/<br>  CentOS-Base.repo  CentOS-CR.repo  CentOS-Debuginfo.repo  CentOS-fasttrack.repo  CentOS-Media.repo  CentOS-Sources.repo  CentOS-Vault.repo  CentOS-x86_64-kernel.repo<br>[root@centos1 ~]# rm -rf /etc/yum.repos.d/*<br>[root@centos1 ~]# ls /etc/yum.repos.d/<br>[root@centos1 ~]# curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo<br>    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current<br>                                   Dload  Upload   Total   Spent    Left  Speed<br>  100  2523  100  2523    0     0   7317      0 --:--:-- --:--:-- --:--:--  7334<br>[root@centos1 ~]# yum clean all<br>  已加载插件：fastestmirror<br>  正在清理软件源： base extras updates<br>  [root@centos1 ~]# yum repolist -y<br> 已加载插件：fastestmirror<br> ....<br>repolist: 15,513<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>运维</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>运维</tag>
+      
+      <tag>centos</tag>
+      
+      <tag>配置</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>关于Docker相关命令</title>
     <link href="/2023/05/09/docker/"/>
     <url>/2023/05/09/docker/</url>
