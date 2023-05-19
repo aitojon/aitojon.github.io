@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="AitoJon">
+  <meta name="keywords" content="aitojon">
+  
+    <meta name="description" content="Docker-compose安装 使用官网源安装最新版本  12345#安装docker依赖sudo yum install -y yum-utilssudo yum-config-manager --add-repo https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;centos&#x2F;docker-ce.reposudo yum makecache fastsudo yum in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Docker compose安装，命令，案例">
+<meta property="og:url" content="http://www.aitojon.com/2023/05/19/dockercompose/index.html">
+<meta property="og:site_name" content="AitoJon">
+<meta property="og:description" content="Docker-compose安装 使用官网源安装最新版本  12345#安装docker依赖sudo yum install -y yum-utilssudo yum-config-manager --add-repo https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;centos&#x2F;docker-ce.reposudo yum makecache fastsudo yum in">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.aitojon.com/img/in/dockercomposein.jpg">
+<meta property="article:published_time" content="2023-05-19T04:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-19T03:56:03.578Z">
+<meta property="article:author" content="AitoJon">
+<meta property="article:tag" content="运维">
+<meta property="article:tag" content="docker-compose">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.aitojon.com/img/in/dockercomposein.jpg">
+  
+  
+  
+  <title>关于Docker compose安装，命令，案例 - AitoJon</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.aitojon.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AitoJon</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>文章</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    <span>分类</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    <span>标签</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/resume/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                <span>简历</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="关于Docker compose安装，命令，案例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-19 12:00" pubdate>
+          2023年5月19日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          134 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于Docker compose安装，命令，案例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h3 id="Docker-compose安装"><a href="#Docker-compose安装" class="headerlink" title="Docker-compose安装"></a>Docker-compose安装</h3><ul>
+<li>使用官网源安装最新版本</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">安装docker依赖</span><br>sudo yum install -y yum-utils<br>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo<br>sudo yum makecache fast<br>sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用阿里源安装</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo<br>sudo yum makecache fast<br><span class="hljs-meta prompt_">#</span><span class="language-bash">安装docker依赖</span><br>sudo yum install -y yum-utils<br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装最新版本</span><br>sudo yum install -y docker-ce docker-compose-plugin<br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装指定版本</span><br>sudo yum install -y docker-ce-20.10.17 docker-compose-plugin<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Docker-compose设置权限</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>systemctl enable docker --now<br>chmod +x docker-compose-linux-x86_64<br>mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose<br>docker-compose version<br></code></pre></td></tr></table></figure>
+
+<h3 id="Docker-compose管理命令"><a href="#Docker-compose管理命令" class="headerlink" title="Docker-compose管理命令"></a>Docker-compose管理命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">官网: https://docs.docker.com/engine/reference/commandline/compose/</span><br>docker compose -p grafana up -d # 运行服务(-p指定服务名)<br>docker compose up -d            # 后台运行服务<br>docker compose ls               # 查看服务(服务名已当前所在目录命名)<br>docker compose ps               # 查看容器状态<br>docker compose -p grafana ps    # 指定服务名查看<br>docekr compose restart          # 重启所有服务<br>docker compose stop             # 停止服务<br>docekr compose start            # 启动服务<br>docker compose down             # 删除服务<br>docker-compose pause            # 暂停已创建的Docker Compose项目中的服务容器<br>docker-compose unpause          # 取消暂停已创建的Docker Compose项目中的服务容器<br>docker-compose logs             # 查看Docker Compose项目中的服务容器的日志输出<br>docker-compose build            # 根据Docker Compose文件中的配置构建镜像<br>docker compose -p grafana exec grafana bash # 进入容器(名称看SERVICE字段)<br>docker compose -p grafana logs -f grafana   # 查看日志<br>docker compose -p grafana logs -f --tail 10 grafana # 查看指定的行数<br>docker-compose --help           # 查看所有可用的命令和选项<br></code></pre></td></tr></table></figure>
+
+<h3 id="Docker-Compose配置文件"><a href="#Docker-Compose配置文件" class="headerlink" title="Docker Compose配置文件"></a>Docker Compose配置文件</h3><p>通常是<code>docker-compose.yml</code>）支持多个选项，用于定义和配置服务、网络、卷、环境变量等。以下是一些常用的选项：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">Docker Compose 配置文件参考：https://docs.docker.com/compose/compose-file/</span><br>1. version：指定Docker Compose文件格式的版本号。<br>2. services：定义要运行的服务。每个服务都可以包含多个配置选项，如image、container_name、ports、volumes、environment等。<br>3. networks：定义要使用的网络。可以创建自定义网络，并将服务连接到指定的网络。<br>4. volumes：定义要使用的卷（数据卷）。可以指定主机路径或命名卷。<br>5. environment：设置环境变量，用于传递配置参数给服务容器。<br>6. depends_on：定义服务之间的依赖关系，指定一个或多个依赖的服务。<br>7. ports：指定将容器的端口映射到主机的端口。<br>8. expose：指定容器要公开的端口，但不映射到主机的端口。<br>9. restart：指定服务在退出后的重启策略。<br>10. command：覆盖容器启动时的默认命令。<br>11. volumes_from：从其他容器或服务挂载卷。<br>12. external_links：连接到其他容器或服务。<br></code></pre></td></tr></table></figure>
+
+<h3 id="Docker-compose案例"><a href="#Docker-compose案例" class="headerlink" title="Docker-compose案例"></a>Docker-compose案例</h3><h5 id="ELK（Elasticsearch-Logstash-Kibana）集群"><a href="#ELK（Elasticsearch-Logstash-Kibana）集群" class="headerlink" title="ELK（Elasticsearch, Logstash, Kibana）集群"></a>ELK（Elasticsearch, Logstash, Kibana）集群</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs shell">version: &#x27;3&#x27;<br>services:<br>  elasticsearch:<br>    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1<br>    container_name: elasticsearch<br>    environment:<br>      - node.name=elasticsearch<br>      - cluster.name=elasticsearch-cluster<br>      - discovery.seed_hosts=elasticsearch2,elasticsearch3<br>      - cluster.initial_master_nodes=elasticsearch,elasticsearch2,elasticsearch3<br>    ports:<br>      - 9200:9200<br>    networks:<br>      - elk-network<br><br>  logstash:<br>    image: docker.elastic.co/logstash/logstash:7.15.1<br>    container_name: logstash<br>    volumes:<br>      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf<br>    command: logstash -f /usr/share/logstash/pipeline/logstash.conf<br>    depends_on:<br>      - elasticsearch<br>    networks:<br>      - elk-network<br><br>  kibana:<br>    image: docker.elastic.co/kibana/kibana:7.15.1<br>    container_name: kibana<br>    ports:<br>      - 5601:5601<br>    depends_on:<br>      - elasticsearch<br>    networks:<br>      - elk-network<br><br>networks:<br>  elk-network:<br>    driver: bridge<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">请注意以下几点：<br>1. 此示例使用ELK版本为7.15.1，你可以根据需要更改版本号。<br>2. 在`elasticsearch`服务中，设置了`node.name`、`cluster.name`、`discovery.seed_hosts`和`cluster.initial_master_nodes`等环境变量。你可以根据实际需求进行调整。<br>3. `logstash`服务使用了一个`logstash.conf`配置文件，你需要将其与Docker Compose文件放在同一目录下，并根据你的日志处理需求进行相应的配置。<br>4. `kibana`服务将Kibana的5601端口映射到主机的5601端口，以便通过浏览器访问Kibana界面。<br>5. 使用了一个名为`elk-network`的自定义网络，用于将所有ELK容器连接到同一个网络中，以便它们可以相互通信。<br>将上述内容保存为`docker-compose.yml`文件，并在该文件所在目录中运行`docker-compose up`命令即可启动ELK集群。<br></code></pre></td></tr></table></figure>
+
+<p>示例的<code>logstash.conf</code>配置文件的内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell">input &#123;<br>  file &#123;<br>    path =&gt; &quot;/path/to/logfile.log&quot;<br>    start_position =&gt; &quot;beginning&quot;<br>    sincedb_path =&gt; &quot;/dev/null&quot;<br>  &#125;<br>&#125;<br><br>filter &#123;<br><span class="hljs-meta prompt_">  # </span><span class="language-bash">添加你需要的过滤规则</span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">例如，可以使用grok插件进行日志解析、使用<span class="hljs-built_in">date</span>插件解析时间戳等</span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">过滤规则根据具体日志格式和需求进行配置</span><br>&#125;<br><br>output &#123;<br>  elasticsearch &#123;<br>    hosts =&gt; [&quot;elasticsearch:9200&quot;]<br>    index =&gt; &quot;logs&quot;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Elasicsearch"><a href="#Elasicsearch" class="headerlink" title="Elasicsearch"></a>Elasicsearch</h5><ul>
+<li>elasicsearch是开源的，实时分布式的搜索与分析引擎；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p elasticsearch/data &amp;&amp; cd elasticsearch/<br>chown 1001.1001 -R data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yaml &lt;&lt; eof<br>version: &#x27;3&#x27;<br>services:<br>  elasticsearch:<br>    image: bitnami/elasticsearch:8.6.2<br>    container_name: es01<br>    hostname: es01<br>    restart: always<br>    environment:<br>      - BITNAMI_DEBUG=false<br>      - ELASTICSEARCH_HEAP_SIZE=2048m<br>      - ELASTICSEARCH_NODE_NAME=es01<br>      - ELASTICSEARCH_BIND_ADDRESS=0.0.0.0<br>      - ELASTICSEARCH_PORT_NUMBER=9200<br>    ports:<br>      - 9200:9200<br>    volumes:<br>      - ./data:/bitnami/elasticsearch/data<br>      - /etc/localtime:/etc/localtime:ro<br>    ulimits:<br>      memlock:<br>        soft: -1 <br>        hard: -1<br>      nofile:<br>        soft: 655360 <br>        hard: 655360<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Mongodb"><a href="#Mongodb" class="headerlink" title="Mongodb"></a>Mongodb</h5><ul>
+<li>mongodb 是开源的跨平台 NoSQL 数据库；</li>
+</ul>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-comment"># 创建目录文件</span><br><span class="hljs-attribute">mkdir -p mongodb/data &amp;&amp; cd mongodb/</span><br><span class="hljs-attribute">chown 1001.1001 -R data</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute"># 添加compose文件</span><br><span class="hljs-attribute">cat &gt; docker-compose.yml &lt;&lt;eof</span><br><span class="hljs-attribute">version</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&#x27;3.9&#x27;</span><br><span class="hljs-attribute">services</span><span class="hljs-punctuation">:</span><br>  <span class="hljs-attribute">mongodb</span><span class="hljs-punctuation">:</span><br>    <span class="hljs-attribute">image</span><span class="hljs-punctuation">:</span> <span class="hljs-string">bitnami/mongodb:6.0.4</span><br>    <span class="hljs-attribute">container_name</span><span class="hljs-punctuation">:</span> <span class="hljs-string">mongo</span><br>    <span class="hljs-attribute">hostname</span><span class="hljs-punctuation">:</span> <span class="hljs-string">mongo</span><br>    <span class="hljs-attribute">ports</span><span class="hljs-punctuation">:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">27017:27017</span><br>    <span class="hljs-attribute">volumes</span><span class="hljs-punctuation">:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/etc/localtime:/etc/localtime:ro</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./data:/bitnami/mongodb</span><br>    <span class="hljs-attribute">environment</span><span class="hljs-punctuation">:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">TZ=Asia/Shanghai</span><br>      <span class="hljs-comment"># 设置管理员root密码</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">MONGODB_ROOT_PASSWORD=password123</span><br>eof<br><br><span class="hljs-comment"># 启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h5><ul>
+<li>搭建mysql 5.7 版本；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建目录文件</span><br>mkdir -p mysql/&#123;data,conf&#125; &amp;&amp; cd mysql/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加配置文件</span><br>cat &gt; conf/my_custom.cnf &lt;&lt;eof<br>[mysqld]<br>lower_case_table_names = 1<br>character-set-server = utf8<br>collation-server = utf8_general_ci<br>default_storage_engine = InnoDB<br>max_connections=1000<br>expire_logs_days=20<br>sql_mode=&#x27;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO ,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&#x27;<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">授权数据目录(这里的权限是和镜像里面的uid和gid一致即可)</span><br>chown 1001.1001 -R data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  mysql:<br>    image: docker.io/bitnami/mysql:5.7.37<br>    container_name: mysql<br>    hostname: mysql<br>    ports:<br>      - 3306:3306<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./conf/my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf<br>      - ./data:/bitnami/mysql/data<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - MYSQL_ROOT_PASSWORD=admin1234 # 这里指定root账号密码<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>搭建mysql 8.x 版本；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建目录文件</span><br>mkdir -p mysql/conf &amp;&amp; cd mysql/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">准备配置文件</span><br>cat &gt; conf/my.cnf &lt;&lt;eof<br>[client]<br>default-character-set = utf8<br><br>[mysqld]<br>character-set-server = utf8<br>collation-server = utf8_bin<br>default_storage_engine = InnoDB<br>port = 3306<br>datadir = /var/lib/mysql<br><br>max_connections=1000<br><br>expire_logs_days = 15<br>relay_log_purge = 1<br>slow_query_log_file = /var/log/mysql/slow.log<br>log-error = /var/log/mysql/error.log<br>log-bin = /var/log/mysql/mysqld-bin<br><span class="hljs-meta prompt_"># </span><span class="language-bash">mysql8之后因为mysql8采用了新的加密方式mysql_native_password</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">这里修改为mysql_native_password，使用mysql5.7的加密方式</span><br>default_authentication_plugin = mysql_native_password<br><br>socket = /tmp/mysql.sock<br>lower_case_table_names = 1<br>sql_mode = NO_ENGINE_SUBSTITUTION<br><br>default-time_zone=&#x27;+8:00&#x27;<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  mysql:<br>    image: docker.io/library/mysql:8.0.30<br>    container_name: mysql<br>    hostname: mysql<br>    restart: always<br>    ports:<br>      - 3306:3306<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./data:/var/lib/mysql<br>      - ./conf/my.cnf:/etc/my.cnf<br>    environment:<br>      - MYSQL_ROOT_PASSWORD=admin1234<br>      - TZ=Asia/Shanghai<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h5><ul>
+<li>这里redis的密码选择使用redis.conf来定义；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p redis/&#123;data,logs,conf&#125; &amp;&amp; cd redis/<br>chown 999.999 -R ./<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加配置文件</span><br>cat &gt; conf/redis.conf &lt;&lt;eof<br>tcp-keepalive 300<br>timeout 0 <br>loglevel warning<br>requirepass redis1234<br>maxclients 5000<br>maxmemory-policy allkeys-lru<br>logfile &quot;/logs/redis.log&quot;<br>port 6379<br>bind 0.0.0.0<br>pidfile /logs/reids.pid<br>daemonize no<br>appendonly yes<br>auto-aof-rewrite-percentage 100<br>auto-aof-rewrite-min-size 64mb<br>dir /bitnami/redis/data<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  redis:<br>    image: docker.io/library/redis:6.0.16<br>    container_name: redis<br>    hostname: redis<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - ALLOW_EMPTY_PASSWORD=no # 不允许空密码<br>      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL # 禁用执行的命令<br>    ports:<br>      - 6379:6379<br>    command: redis-server /opt/bitnami/redis/mounted-etc/redis.conf<br>    volumes:<br>      - ./conf/redis.conf:/opt/bitnami/redis/mounted-etc/redis.conf<br>      - ./data:/bitnami/redis/data<br>      - ./logs:/logs<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Rabbitmq"><a href="#Rabbitmq" class="headerlink" title="Rabbitmq"></a>Rabbitmq</h5><ul>
+<li>Rabbitmq是目前非常热门的一款消息中间件，许多企业都在大量使用。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p rabbitmq &amp;&amp; cd rabbitmq/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  rabbitmq:<br>    image: docker.io/library/rabbitmq:3.11.2-management-alpine<br>    container_name: rabbitmq<br>    restart: always<br>    hostname: rabbitmq<br>    ports:<br>      - 15672:15672<br>      - 5672:5672<br>      - 25672:25672<br>      - 4369:4369<br>    volumes:<br>      - ./data:/var/lib/rabbitmq<br>    environment:<br>      - RABBITMQ_DEFAULT_USER=admin<br>      - RABBITMQ_DEFAULT_PASS=admin<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Minio"><a href="#Minio" class="headerlink" title="Minio"></a>Minio</h5><ul>
+<li>minio是开源的，兼容S3的对象存储服务；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p minio/data &amp;&amp; cd minio/<br>chown 1001.1001 -R data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  minio:<br>    image: docker.io/bitnami/minio:2023.2.27<br>    container_name: minio<br>    hostname: minio<br>    restart: always<br>    ports:<br>      - 9000:9000<br>      - 9001:9001<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./data:/data<br>    environment:<br>      - MINIO_ROOT_USER=admin # 账号名长度必须大于等于5位<br>      - MINIO_ROOT_PASSWORD=admin^12345 # 注意密码长度必须大于等于8位<br>      - TZ=Asia/Shangha<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h5><ul>
+<li>Jenkins 基于Java开发的一种持续集成工具；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p jenkins/data &amp;&amp; cd jenkins/<br>chown 1000.1000 -R data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  jenkins-master:<br>    image: docker.io/jenkins/jenkins:2.377-jdk17<br>    container_name: jenkins<br>    hostname: jenkins<br>    restart: always<br>    privileged: true<br>    network_mode: &#x27;host&#x27;<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./data:/var/jenkins_home<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - JAVA_OPTS=&#x27;-Djava.util.logging.config.file=/var/jenkins_home/log.properties&#x27;<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Nexus"><a href="#Nexus" class="headerlink" title="Nexus"></a>Nexus</h5><ul>
+<li>Nexus是开源的仓库管理软件，常用来做私服。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p nexus/data/nexus-data &amp;&amp; cd nexus/<br>chown 200.200 -R ./data/nexus-data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  nexus:<br>    container_name: nexys<br>    image: sonatype/nexus3:3.37.0<br>    hostname: nexus<br>    restart: always<br>    ports:<br>      - 8081:8081<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./data/nexus-data:/nexus-data<br>    environment:<br>      - TZ=Asia/Shanghai<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Sonarqube"><a href="#Sonarqube" class="headerlink" title="Sonarqube"></a>Sonarqube</h5><ul>
+<li>Sonarqube 是一个开源的代码分析平台, 用来持续分析和评测项目源代码的质量 ；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p sonarqube &amp;&amp; cd sonarqube/<br>mkdir -p sonar/&#123;extensions,logs,data,conf&#125;<br>mkdir postgresql<br>chown 1001.1001 -R postgresql<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">调整内核参数</span><br>echo&quot;vm.max_map_count=655300&quot; &gt;&gt; /etc/sysctl.conf<br>sysctl -p<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>networks:<br>  sonar:<br>    driver: bridge<br>services:<br>  postgresql:<br>    image: bitnami/postgresql:15.1.0<br>    container_name: postgresql<br>    hostname: postgresql<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./postgresql:/bitnami/postgresql<br>    ports:<br>      - 15432:5432<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - POSTGRESQL_USERNAME=sonar<br>      - POSTGRESQL_PASSWORD=sonar<br>      - POSTGRESQL_DATABASE=sonar<br>    networks:<br>      - sonar<br>  sonar:<br>    image: docker.io/library/sonarqube:8.9.7-community<br>    container_name: sonar<br>    hostname: sonar<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./sonar/extensions:/opt/sonarqube/extensions<br>      - ./sonar/logs:/opt/sonarqube/logs<br>      - ./sonar/data:/opt/sonarqube/data<br>      - ./sonar/conf:/opt/sonarqube/conf<br>    ports:<br>      - 9000:9000<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - SONARQUBE_JDBC_URL=jdbc:postgresql://postgresql:5432/sonar<br>      - SONARQUBE_JDBC_USERNAME=sonar<br>      - SONARQUBE_JDBC_PASSWORD=sonar<br>    networks:<br>      - sonar<br>    ulimits:<br>      memlock:<br>        soft: -1<br>        hard: -1<br>      nofile:<br>        soft: 165530<br>        hard: 165530<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Allure"><a href="#Allure" class="headerlink" title="Allure"></a>Allure</h5><ul>
+<li>allure是开源测试报告框架，支持pytest单元测试框架 ；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p allure/data &amp;&amp; cd allure/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3&#x27;<br>services:<br>  allure:<br>    image: docker.io/frankescobar/allure-docker-service:2.21.0-amd64<br>    environment:<br>      TZ: Asia/Shanghai<br>      CHECK_RESULTS_EVERY_SECONDS: 1<br>      KEEP_HISTORY: 1<br>    ports:<br>      - 5050:5050<br>    volumes:<br>      - ./data/results:/app/allure-results<br>      - /etc/localtime:/etc/localtime:ro<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Kuboard"><a href="#Kuboard" class="headerlink" title="Kuboard"></a>Kuboard</h5><ul>
+<li>kuboard 是开源的k8s管理面板工具；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p kuboard &amp;&amp; cd kuboard/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &#x27;3.9&#x27;<br>services:<br>  kuboard:<br>    image: eipwork/kuboard:v3.5.0.3-amd64<br>    hostname: kuboard<br>    restart: unless-stopped<br>    privileged: true<br>    ports:<br>      - 80:80/TCP<br>      - 10081:10081/TCP<br>      - 10081:10081/UDP<br>    volumes:<br>      - /var/run/docker.sock:/var/run/docker.sock<br>      - /etc/localtime:/etc/localtime<br>      - ./data:/data<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - KUBOARD_AGENT_SERVER_UDP_PORT=&quot;10081&quot;<br>      - KUBOARD_AGENT_SERVER_TCP_PORT=&quot;10081&quot;<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务(admin/Kuboard123)</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Grafana"><a href="#Grafana" class="headerlink" title="Grafana"></a>Grafana</h5><ul>
+<li>Grafana是一个开源的，监控仪表系统；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p grafana/data &amp;&amp; cd grafana/<br>chown 472.472 -R data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yml &lt;&lt;eof<br>version: &quot;3.9&quot;<br>services:<br>  grafana:<br>    image: docker.io/grafana/grafana:9.1.0<br>    container_name: grafana<br>    hostname: grafana<br>    restart: always<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./data:/var/lib/grafana<br>    user: &quot;472&quot;<br>    environment:<br>      - TZ=Asia/Shanghai<br>    ports:<br>      - 3000:3000<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务(admin/admin)</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="Jumpserver"><a href="#Jumpserver" class="headerlink" title="Jumpserver"></a>Jumpserver</h5><ul>
+<li>jumpserver 是开源的，符合 4A 规范的堡垒机系统。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p jumpserver &amp;&amp; cd jumpserver/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yaml &lt;&lt; eof<br>version: &#x27;3.9&#x27;<br>services:<br>  jumpserver:<br>    image: jumpserver/jms_all:v2.28.6<br>    container_name: jumpserver<br>    restart: always<br>    hostname: jumpserver<br>    privileged: true<br>    network_mode: &#x27;host&#x27;<br>    volumes:<br>      - /etc/localtime:/etc/localtime<br>      - ./data:/opt/jumpserver/data/<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - SECRET_KEY=ww6q5uW0yRrP9moRy8A0C7wgvanGIx3nNO4lPlZZbkolusbmOb # 密钥: cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 50<br>      - BOOTSTRAP_TOKEN=lIQmk67fhNMC4ede # token: cat /dev/urandom | tr -dc A-Za-z0-9 | head -c 16<br>      # 数据库地址<br>      - DB_HOST=10.0.0.118<br>      - DB_PORT=3306<br>      - DB_USER=jumpserver<br>      - DB_PASSWORD=jumpserver<br>      - DB_NAME=jumpserver<br>      # redis缓存<br>      - REDIS_HOST=10.0.0.118<br>      - REDIS_PORT=6379<br>      - REDIS_PASSWORD=admin1234<br>    cap_add:<br>      - SYS_PTRACE<br>    ulimits:<br>       memlock:<br>         soft: -1<br>         hard: -1<br>       nofile:<br>         soft: 655360<br>         hard: 655360<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务(admin/admin)</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="GitLab"><a href="#GitLab" class="headerlink" title="GitLab"></a>GitLab</h5><ul>
+<li>Gitlab 是被广泛使用的基于git的开源代码管理平台 ；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p gitlab/&#123;conf,data,logs&#125; &amp;&amp; cd gitlab/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加ssl证书(这里自建一个)</span><br>mkdir conf/ssl &amp;&amp; cd conf/ssl/<br>openssl genrsa -out server.key 2048<br>openssl genrsa -out private.key 2048<br>openssl req -new -key private.key -out cert_req.csr -subj &quot;/C=CN/ST=TEST/L=TEST/O=test/OU=main/CN=*.demo.com/emailAddress=root@localhost.com&quot;<br>openssl x509 -req -days 365 -in cert_req.csr -signkey private.key -out server_cert.crt<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cd ../../<br>cat &gt; docker-compose.yaml &lt;&lt; eof<br>version: &#x27;3.9&#x27;<br>services:<br>    gitlab:<br>      image: &#x27;gitlab/gitlab-ce:13.5.2-ce.0&#x27;<br>      container_name: &#x27;gitlab&#x27;<br>      restart: always<br>      hostname: &#x27;gitlab&#x27;<br>      environment:<br>        TZ: &#x27;Asia/Shanghai&#x27;<br>        GITLAB_OMNIBUS_CONFIG: |<br>           external_url &#x27;https://gitlab.demo.com&#x27;# 使用https访问<br>           nginx[&#x27;enable&#x27;] = true<br>           nginx[&#x27;client_max_body_size&#x27;] = &#x27;512m&#x27;<br>           nginx[&#x27;redirect_http_to_https&#x27;] = true<br>           nginx[&#x27;ssl_certificate&#x27;] = &quot;/etc/ssl/server_cert.crt&quot;<br>           nginx[&#x27;ssl_certificate_key&#x27;] = &quot;/etc/ssl/private.key&quot;<br>           nginx[&#x27;ssl_protocols&#x27;] = &quot;TLSv1.1 TLSv1.2&quot;<br>           nginx[&#x27;ssl_session_cache&#x27;] = &quot;builtin:1000  shared:SSL:10m&quot;<br>           nginx[&#x27;listen_addresses&#x27;] = [&quot;0.0.0.0&quot;]<br>           nginx[&#x27;http2_enabled&#x27;] = true<br>           prometheus_monitoring[&#x27;enable&#x27;] = false<br>      ports:<br>        - 443:443<br>        - 80:80<br>      volumes:<br>        - /etc/localtime:/etc/localtime:ro<br>        - ./conf:/etc/gitlab<br>        - ./data:/var/opt/gitlab<br>        - ./logs:/var/log/gitlab<br>        - ./conf/ssl:/etc/ssl<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h5 id="SQL-Server"><a href="#SQL-Server" class="headerlink" title="SQL Server"></a>SQL Server</h5><ul>
+<li>如果不想在windows下安装sql server数据库，可以通过如下方式搭建；</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建数据目录</span><br>mkdir -p sqlserver/data/mssql &amp;&amp; cd sqlserver/<br>chmod 777 -R data/mssql<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加compose文件</span><br>cat &gt; docker-compose.yaml &lt;&lt; eof<br>version: &#x27;3.9&#x27;<br>services:<br>  sqlserver:<br>    image: mcr.microsoft.com/mssql/server:2019-latest<br>    container_name: sqlserver<br>    hostname: sqlserver<br>    restart: always<br>    ports:<br>      - 1433:1433<br>    volumes:<br>      - /etc/localtime:/etc/localtime:ro<br>      - ./data/mssql:/var/opt/mssql<br>    environment:<br>      - TZ=Asia/Shanghai<br>      - ACCEPT_EULA=Y<br>      - MSSQL_SA_PASSWORD=Admin_123456 # 管理员sa的密码<br>eof<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动服务</span><br>docker compose up -d<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%BF%90%E7%BB%B4/">#运维</a>
+      
+        <a href="/tags/docker-compose/">#docker-compose</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/18/docker/" title="关于Docker相关命令">
+                        <span class="hidden-mobile">关于Docker相关命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

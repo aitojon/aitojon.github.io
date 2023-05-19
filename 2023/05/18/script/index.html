@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="AitoJon">
+  <meta name="keywords" content="aitojon">
+  
+    <meta name="description" content="Nginx部署脚本1234567891011121314151617181920212223242526272829#!&#x2F;bin&#x2F;bash# 安装编译Nginx所需的依赖库apt-get updateapt-get install -y build-essential zlib1g-dev libpcre3-dev libssl-dev# 下载或指定Nginx源码包，并解压缩NGINX_SOUR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用脚本案例">
+<meta property="og:url" content="http://www.aitojon.com/2023/05/18/script/index.html">
+<meta property="og:site_name" content="AitoJon">
+<meta property="og:description" content="Nginx部署脚本1234567891011121314151617181920212223242526272829#!&#x2F;bin&#x2F;bash# 安装编译Nginx所需的依赖库apt-get updateapt-get install -y build-essential zlib1g-dev libpcre3-dev libssl-dev# 下载或指定Nginx源码包，并解压缩NGINX_SOUR">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.aitojon.com/img/in/scriptin.jpg">
+<meta property="article:published_time" content="2023-05-18T06:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-19T03:57:15.569Z">
+<meta property="article:author" content="AitoJon">
+<meta property="article:tag" content="运维">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="脚本">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.aitojon.com/img/in/scriptin.jpg">
+  
+  
+  
+  <title>常用脚本案例 - AitoJon</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.aitojon.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>AitoJon</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>文章</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    <i class="iconfont icon-archive-fill"></i>
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/categories/">
+                    <i class="iconfont icon-category-fill"></i>
+                    <span>分类</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/tags/">
+                    <i class="iconfont icon-tags-fill"></i>
+                    <span>标签</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/resume/">
+                <i class="iconfont icon-bookmark-fill"></i>
+                <span>简历</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="常用脚本案例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-18 14:00" pubdate>
+          2023年5月18日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          16k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          131 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">常用脚本案例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h5 id="Nginx部署脚本"><a href="#Nginx部署脚本" class="headerlink" title="Nginx部署脚本"></a>Nginx部署脚本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译Nginx所需的依赖库</span><br>apt-get update<br>apt-get install -y build-essential zlib1g-dev libpcre3-dev libssl-dev<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载或指定Nginx源码包，并解压缩</span><br>NGINX_SOURCE_URL=&quot;http://nginx.org/download/nginx-1.22.0.tar.gz&quot;<br>NGINX_SOURCE_FILE=&quot;/tmp/nginx-1.22.0.tar.gz&quot;          #指定本地路径<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载Nginx源码包</span><br>wget $NGINX_SOURCE_URL -O $NGINX_SOURCE_FILE<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压缩Nginx源码包</span><br>tar -xzvf $NGINX_SOURCE_FILE<br>cd nginx-1.22.0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">编译安装Nginx</span><br>./configure<br>make<br>make install<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动Nginx服务</span><br>nginx<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">确认Nginx服务是否成功启动</span><br>ps aux | grep nginx<br><br>echo &quot;Nginx安装和启动完成！&quot;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Nginx平滑升级，检测现版本模块信息"><a href="#Nginx平滑升级，检测现版本模块信息" class="headerlink" title="Nginx平滑升级，检测现版本模块信息"></a>Nginx平滑升级，检测现版本模块信息</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取当前运行的Nginx进程ID</span><br>NGINX_PID=$(pidof nginx)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查Nginx进程是否存在</span><br>if [ -z &quot;$NGINX_PID&quot; ]; then<br>  echo &quot;Nginx is not running.&quot;<br>  exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取当前运行的Nginx进程的配置信息</span><br>NGINX_CONF=$(ps -p $NGINX_PID -o args= | awk &#x27;&#123;print $NF&#125;&#x27; | grep -E &quot;^/.*nginx.conf$&quot;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检查Nginx配置文件是否存在</span><br>if [ -z &quot;$NGINX_CONF&quot; ]; then<br>  echo &quot;Unable to determine Nginx configuration file.&quot;<br>  exit 1<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取Nginx模块信息</span><br>NGINX_MODULES=$(nginx -V 2&gt;&amp;1 | grep -oP -- &#x27;--with-[a-zA-Z\_-]+&#x27; | sed &#x27;s/--with-//&#x27;)<br>echo &quot;Current Nginx modules:&quot;<br>echo &quot;$NGINX_MODULES&quot;<br>echo &quot;&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载或指定新版本的Nginx源码包，并解压缩</span><br>NGINX_SOURCE_URL=&quot;http://nginx.org/download/nginx-1.22.0.tar.gz&quot;<br>NGINX_SOURCE_FILE=&quot;/tmp/nginx-1.22.0.tar.gz&quot;          #指定本地路径<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载Nginx源码包</span><br>wget &quot;$NGINX_SOURCE_URL&quot; -O &quot;$NGINX_SOURCE_FILE&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压缩Nginx源码包</span><br>tar -xzvf &quot;$NGINX_SOURCE_FILE&quot;<br>cd nginx-1.22.0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置新版本的Nginx，保留原有模块配置</span><br>./configure --with-modules=&quot;$NGINX_MODULES&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">编译新版本的Nginx</span><br>make<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">备份旧版本的Nginx可执行文件</span><br>mv /usr/sbin/nginx /usr/sbin/nginx.old<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">将新编译的Nginx可执行文件替换旧版本</span><br>mv objs/nginx /usr/sbin/nginx<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动新版本的Nginx</span><br>nginx -t &amp;&amp; nginx -s reload<br><br>echo &quot;Nginx平滑升级完成！&quot;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Nginx的日志文件清理"><a href="#Nginx的日志文件清理" class="headerlink" title="Nginx的日志文件清理"></a>Nginx的日志文件清理</h5><p>保留最近15天内的日志文件，其他旧日志文件将被删除：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><br>log_dir=&quot;/var/log/nginx&quot;  # Nginx日志目录<br>days_to_keep=15            # 保留的天数<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取当前日期15天前的时间戳</span><br>timestamp=$(date -d &quot;$days_to_keep days ago&quot; +%s)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查找Nginx日志目录下的文件</span><br>for file in $log_dir/*.log; do<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">获取文件的最后修改时间</span><br>  last_modified=$(stat -c %Y &quot;$file&quot;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">检查文件最后修改时间是否早于15天前的时间戳</span><br>  if ((last_modified &lt; timestamp)); then<br>    echo &quot;删除旧日志文件: $file&quot;<br>    rm &quot;$file&quot;<br>  fi<br>done<br></code></pre></td></tr></table></figure>
+
+<p><code>log_dir</code>变量设置为Nginx日志文件所在的目录</p>
+<p><code>days_to_keep</code>变量指定了要保留的天数。</p>
+<p>脚本保存为<code>nginx_log_cleanup.sh</code>文件，并为其赋予执行权限（例如：<code>chmod +x nginx_log_cleanup.sh</code>）</p>
+<h5 id="Nginx访问访问日志按天切割"><a href="#Nginx访问访问日志按天切割" class="headerlink" title="Nginx访问访问日志按天切割"></a><strong>Nginx访问访问日志按天切割</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br>LOG_DIR=/usr/local/nginx/logs<br>YESTERDAY_TIME=$(date -d &quot;yesterday&quot; +%F)<br>LOG_MONTH_DIR=$LOG_DIR/$(date +&quot;%Y-%m&quot;)<br>LOG_FILE_LIST=&quot;default.access.log&quot;<br><br>for LOG_FILE in $LOG_FILE_LIST; do<br>  [ ! -d $LOG_MONTH_DIR ] &amp;&amp; mkdir -p $LOG_MONTH_DIR<br>  mv $LOG_DIR/$LOG_FILE $LOG_MONTH_DIR/$&#123;LOG_FILE&#125;_$&#123;YESTERDAY_TIME&#125;<br>done<br></code></pre></td></tr></table></figure>
+
+<h5 id="Nginx访问日志分析脚本"><a href="#Nginx访问日志分析脚本" class="headerlink" title="Nginx访问日志分析脚本"></a><strong>Nginx访问日志分析脚本</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">日志格式: <span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>] <span class="hljs-string">&quot;<span class="hljs-variable">$request</span>&quot;</span> <span class="hljs-variable">$status</span> <span class="hljs-variable">$body_bytes_sent</span> <span class="hljs-string">&quot;<span class="hljs-variable">$http_referer</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$http_user_agent</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$http_x_forwarded_for</span>&quot;</span></span><br>LOG_FILE=$1<br>echo &quot;统计访问最多的10个IP&quot;<br>awk &#x27;&#123;a[$1]++&#125;END&#123;print &quot;UV:&quot;,length(a);for(v in a)print v,a[v]&#125;&#x27; $LOG_FILE |sort -k2 -nr |head -10<br>echo &quot;----------------------&quot;<br><br>echo &quot;统计时间段访问最多的IP&quot;<br>awk &#x27;$4&gt;=&quot;[01/Dec/2018:13:20:25&quot; &amp;&amp; $4&lt;=&quot;[27/Nov/2018:16:20:49&quot;&#123;a[$1]++&#125;END&#123;for(v in a)print v,a[v]&#125;&#x27; $LOG_FILE |sort -k2 -nr|head -10<br>echo &quot;----------------------&quot;<br><br>echo &quot;统计访问最多的10个页面&quot;<br>awk &#x27;&#123;a[$7]++&#125;END&#123;print &quot;PV:&quot;,length(a);for(v in a)&#123;if(a[v]&gt;10)print v,a[v]&#125;&#125;&#x27; $LOG_FILE |sort -k2 -nr<br>echo &quot;----------------------&quot;<br><br>echo &quot;统计访问页面状态码数量&quot;<br>awk &#x27;&#123;a[$7&quot; &quot;$9]++&#125;END&#123;for(v in a)&#123;if(a[v]&gt;5)print v,a[v]&#125;&#125;&#x27;<br></code></pre></td></tr></table></figure>
+
+<h5 id="系统配置初始化脚本"><a href="#系统配置初始化脚本" class="headerlink" title="系统配置初始化脚本"></a><strong>系统配置初始化脚本</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">/bin/bash</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置时区并同步时间**</span><br>ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<br>if ! crontab -l |grep ntpdate &amp;&gt;/dev/null ; then<br>  (echo &quot;* 1 * * * ntpdate time.windows.com &gt;/dev/null 2&gt;&amp;1&quot;;crontab -l) |crontab<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">禁用selinux</span><br>sed -i &#x27;/SELINUX/&#123;s/permissive/disabled/&#125;&#x27; /etc/selinux/config<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">关闭防火墙</span><br>if egrep &quot;7.[0-9]&quot; /etc/redhat-release &amp;&gt;/dev/null; then<br>  systemctl stop firewalld<br>  systemctl disable firewalld<br>elif egrep &quot;6.[0-9]&quot; /etc/redhat-release &amp;&gt;/dev/null; then<br>  service iptables stop<br>  chkconfig iptables off<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">历史命令显示操作时间</span><br>if ! grep HISTTIMEFORMAT /etc/bashrc; then<br>  echo &#x27;export HISTTIMEFORMAT=&quot;%F %T `whoami` &quot;&#x27; &gt;&gt; /etc/bashrc<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">SSH超时时间</span><br>if ! grep &quot;TMOUT=600&quot; /etc/profile &amp;&gt;/dev/null; then<br>  echo &quot;export TMOUT=600&quot; &gt;&gt; /etc/profile<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">禁止root远程登录</span><br>sed -i &#x27;s/#PermitRootLogin yes/PermitRootLogin no/&#x27; /etc/ssh/sshd_config<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">禁止定时任务向发送邮件</span><br>sed -i &#x27;s/^MAILTO=root/MAILTO=&quot;&quot;/&#x27; /etc/crontab<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置最大打开文件数</span><br>if ! grep &quot;* soft nofile 65535&quot; /etc/security/limits.conf &amp;&gt;/dev/null; then<br>  cat &gt;&gt; /etc/security/limits.conf &lt;&lt; EOF<br>  * soft nofile 65535<br>  * hard nofile 65535<br>EOF<br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">系统内核优化</span><br>cat &gt;&gt; /etc/sysctl.conf &lt;&lt; EOF<br>net.ipv4.tcp_syncookies = 1<br>net.ipv4.tcp_max_tw_buckets = 20480<br>net.ipv4.tcp_max_syn_backlog = 20480<br>net.core.netdev_max_backlog = 262144<br>net.ipv4.tcp_fin_timeout = 20<br>EOF<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">减少SWAP使用</span><br>echo &quot;0&quot; &gt; /proc/sys/vm/swappiness<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装系统性能分析工具及其他</span><br>yum install gcc make autoconf vim sysstat net-tools iostat if<br></code></pre></td></tr></table></figure>
+
+<h5 id="巡检服务器磁盘利用率并判断是否超过80-阈值"><a href="#巡检服务器磁盘利用率并判断是否超过80-阈值" class="headerlink" title="巡检服务器磁盘利用率并判断是否超过80%阈值"></a><strong>巡检服务器磁盘利用率并判断是否超过80%阈值</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><br>HOST_INFO=host.info     #需巡检主机，按需设置路径<br>REPORT_FILE=report.txt  #报告文件，按需设置路径<br>DAYS_TO_KEEP=15         #报告文件保存有效期<br><br>for IP in $(awk &#x27;/^[^#]/&#123;print $1&#125;&#x27; $HOST_INFO); do<br>  USER=$(awk -v ip=$IP &#x27;ip==$1&#123;print $2&#125;&#x27; $HOST_INFO)<br>  PORT=$(awk -v ip=$IP &#x27;ip==$1&#123;print $3&#125;&#x27; $HOST_INFO)<br>  TMP_FILE=/tmp/disk.tmp<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">SSH 连接到远程主机，获取磁盘使用情况信息</span><br>  ssh -p $PORT $USER@$IP &#x27;df -h&#x27; &gt; $TMP_FILE<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">  # </span><span class="language-bash">检查磁盘使用率是否超过阈值，输出警告信息</span><br>  USE_RATE_LIST=$(awk &#x27;BEGIN&#123;OFS=&quot;=&quot;&#125;/^\/dev/&#123;print $NF,int($5)&#125;&#x27; $TMP_FILE)<br>  for USE_RATE in $USE_RATE_LIST; do<br>    PART_NAME=$&#123;USE_RATE%=*&#125;<br>    USE_RATE=$&#123;USE_RATE#*=&#125;<br>    if [ $USE_RATE -ge 80 ]; then<br>      echo &quot;Warning: $PART_NAME Partition usage $USE_RATE%!&quot; &gt;&gt; $REPORT_FILE<br>    fi<br>  done<br>done<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">清理旧的报告文件</span><br>find . -name $REPORT_FILE -mtime +$DAYS_TO_KEEP -delete<br></code></pre></td></tr></table></figure>
+
+<p><code>host.info</code>文件的格式：IP_ADDRESS：主机的IP地址或主机名，USERNAME：SSH登录主机所使用的用户名，PORT：SSH端口号。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">IP_ADDRESS USERNAME PORT<br></code></pre></td></tr></table></figure>
+
+<h5 id="巡检脚本"><a href="#巡检脚本" class="headerlink" title="巡检脚本"></a>巡检脚本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">脚本功能描述:监控服务器主要性能参数指标</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">监控项目:内核信息,主机名称,IP地址,登录账户,内存与swap信息,磁盘信息,CPU负载</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">内核信息</span><br>kernel=$(uname -r)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">操作系统版本</span><br>release=$(cat /etc/redhat-release)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">主机名称</span><br>hostname=$HOSTNAME<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">本地IP地址列表</span><br>localip=$(ip a s | awk &#x27;/inet /&#123;print $2&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">总内存容量</span><br>mem_total=$(free | awk &#x27;/Mem/&#123;print $2&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">剩余内存容量</span><br>mem_free=$(free | awk &#x27;/Mem/&#123;print $NF&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">总swap容量</span><br>swap_total=$(free | awk &#x27;/Swap/&#123;print $2&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">剩余swap容量</span><br>swap_free=$(free | awk &#x27;/Swap/&#123;print $NF&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">磁盘信息</span><br>disk=$(df | awk &#x27;/^\/dev/&#123;print $1,$2,$4&#125;&#x27;|column -t)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">CPU最近1分钟的平均负载</span><br>load1=$(uptime | sed &#x27;s/,//g&#x27; | awk &#x27;&#123;print $(NF-2)&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">CPU最近5分钟的平均负载</span><br>load5=$(uptime | sed &#x27;s/,//g&#x27; | awk &#x27;&#123;print $(NF-1)&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">CPU最近15分钟的平均负载</span><br>load15=$(uptime | sed &#x27;s/,//g&#x27; | awk &#x27;&#123;print $(NF)&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">登录用户数量</span><br>login_users=$(who | wc -l)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">进程数量</span><br>procs=$(ps aux | wc -l)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">系统总账户数量</span><br>users=$(sed -n &#x27;$=&#x27; /etc/passwd)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">CPU型号</span><br>cpu_info=$(LANG=C lscpu |awk -F: &#x27;/Model name/ &#123;print $2&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">CPU内核数量</span><br>cpu_core=$(awk &#x27;/processor/&#123;core++&#125; END&#123;print core&#125;&#x27; /proc/cpuinfo)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">安装性能监控软件</span><br>yum -y -q  install sysstat &amp;&gt;/dev/null<br><br>echo -e &quot;\033[34m提取磁盘性能指标,请稍后...\033[0m&quot;<br><br>tps=$(LANG=C sar -d -p 1 6 | awk &#x27;/Average/&#x27; | tail -n +2 |awk &#x27;&#123;print &quot;[&quot;$2&quot;]磁盘平均IO数量:&quot;$3&#125;&#x27;) &amp;<br><br>read_write=$(LANG=C sar -d -p 1 6 |awk &#x27;/Average/&#x27; | tail -n +2 | awk &#x27;&#123;print &quot;[&quot;$2&quot;]平均每秒读写扇区量:&quot;$4,$5&#125;&#x27;) &amp;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">中断数量</span><br>irq=$(vmstat 1 2 |tail -n +4 | awk &#x27;&#123;print $11&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">上下文切换数量</span><br>cs=$(vmstat 1 2|tail -n +4 | awk &#x27;&#123;print $12&#125;&#x27;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">占用内存资源最多的10个进程列表</span><br>top_proc_mem=$(ps --no-headers -eo comm,rss | sort -k2 -n |tail -10)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">占用内存资源最多的10个进程列表</span><br>top_proc_cpu=$(ps --no-headers -eo comm,rss | sort -k2 -n |tail -10)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">获取网卡流量信息,接收|发送的数据流量,单位为字节(bytes)</span><br>net_monitor=$(cat /proc/net/dev | tail -n +3 |awk &#x27;BEGIN&#123; print &quot;网卡名称 入站数据流量(bytes) 出站数据流量(bytes)&quot;&#125; &#123;print $1,$2,$10&#125;&#x27; | column -t)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">输出数据信息</span><br>echo -e &quot;\033[32m************************本机主要参数列表********************\033[0m&quot;<br>echo -e &quot;本机IP地址列表:\033[32m$localip\033[0m&quot;<br>echo -e &quot;本机主机名称:\033[32m$hostname\033[0m&quot;<br>echo -e &quot;操作系统版本为:\033[32m$release\033[0m,内核版本:\033[32m$kernel\033[0m&quot;<br>echo -e &quot;CPU型号为:\033[32m$cpu_info\033[0m,CPU内核数量:\033[32$kernel\033[0m&quot;<br>echo -e &quot;本机总内存容量:\033[32m$mem_total\033[0m,剩余可用内存容量:\033[32m$mem_free\033[0m&quot;<br>echo -e &quot;本机swap总容量:\033[32m$swap_local\033[0m,剩余swap容量:\033[32m$swap_free\033[0m&quot;<br>echo -e &quot;CPU最近1分钟,5分钟,15分钟的平均负载分别为:\033[32m$load1 $load5 $load15\033[0m&quot;<br>echo -e &quot;本机总账户数量为:\033[32m$users\033[0m,当前登录系统的账户数量:\033[32m$login_users\033[0m&quot;<br>echo -e &quot;当前系统中启动的进程数量:\033[32m$procs\033[0m&quot;<br>echo -e &quot;占用CPU资源最多的10个进程列表为:&quot;<br>echo -e &quot;\033[32m$top_proc_cpu\033[0m&quot;<br>echo -e &quot;占用CPU内存资源最多的10个进程列表为:&quot;<br>echo -e &quot;\033[32m$top_proc_mem\033[0m&quot;<br>echo -e &quot;CPU中断数量为:\033[32m$irq\033[0m,CPU上下文切换数量:\033[32m$cs\033[0m&quot;<br>echo -e &quot;每个磁盘分区的总容量与剩余容量信息如下:&quot;<br>echo -e &quot;$disk&quot;<br>echo -e &quot;$tps&quot;<br>echo -e &quot;$read_write&quot;<br>echo -e &quot;$net_monitor&quot;<br>echo -e &quot;\033[32m************************巡检结束********************\033[0m&quot;<br></code></pre></td></tr></table></figure>
+
+<h5 id="单节点Redis部署脚本"><a href="#单节点Redis部署脚本" class="headerlink" title="单节点Redis部署脚本"></a>单节点Redis部署脚本</h5><p>需要确保已经安装了 tcl插件包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><br>```<br>PACKAGE_DIR=$1             #Redis安装包所在路径<br><span class="hljs-meta prompt_">#</span><span class="language-bash">*.tar.gz software path</span><br>INSTALL_DIR=$2             #Redis安装路径<br>PASSWD=$3                  #Redis密码<br>```<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">获取redis版本</span><br><span class="hljs-meta prompt_"> #</span><span class="language-bash">带后缀的文件名 redis_filename_tmp=<span class="hljs-variable">$&#123;PACKAGE_DIR##*/&#125;</span> <span class="hljs-comment">#不带后缀的文件名 redis_filename=$&#123;redis_filename_tmp%.*.*&#125;</span></span><br><br>if [ $# -lt 3 ]; then<br> echo &quot;Usage: $0 PackageDir InstallDir PassWd&quot;<br> echo &quot;For example: $0 /tmp/redis-2.8.7.tar.gz /app/redis ccssoft&quot;<br> echo &quot;PackageDir:为redis安装包所在路径,本程序限定redis安装包为redis-x.x.x.tar.gz!&quot; echo &quot;InstallDir:为redis安装路径!&quot;<br> echo &quot;PassWd:为redis密码!&quot;<br> exit 1;<br><br>fi<br><br>echo &quot;你输入的安装包所在路径为: $PACKAGE_DIR&quot; echo &quot;你输入的安装路径为: $INSTALL_DIR&quot; echo &quot;你输入的密码: $PASSWD&quot;<br> echo &quot;你输入的redis版本为: $redis_filename&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">判断tcl插件是否存在,不存在则退出 <span class="hljs-keyword">if</span> ! rpm -qa | grep tcl ;<span class="hljs-keyword">then</span></span><br><br>echo &quot;ERROR:系统不存在tcl包，请安装后再运行此安装程序! 请使用root账号执行: yum -y install tcl&quot;<br><br>exit 1 fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">判断安装包是否存在,不存在则退出</span><br> if [ ! -f &quot;$PACKAGE_DIR&quot; ];then<br><br>```<br>   echo &quot;ERROR: $PACKAGE_DIR  not exist!&quot;<br>```<br><br>exit 1 fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">判断安装路径是否存在,如果不存在则创建 <span class="hljs-keyword">if</span> [ ! -d <span class="hljs-string">&quot;<span class="hljs-variable">$INSTALL_DIR</span>&quot;</span> ]; <span class="hljs-keyword">then</span></span><br><br>```<br>   echo &quot;INFO:$INSTALL_DIR not exist!&quot;<br>   echo &quot;mkdir -p $INSTALL_DIR&quot;<br>   mkdir -p $INSTALL_DIR/tmp<br>   echo &quot;INFO:$INSTALL_DIR creat successful!&quot;<br>```<br><br>fi<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">解压redis文件</span><br> tar -xvzf $PACKAGE_DIR -C $INSTALL_DIR/tmp<br> cd $INSTALL_DIR/tmp/$redis_filename<br> cp $INSTALL_DIR/tmp/$redis_filename/redis.conf $INSTALL_DIR/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">修改redis.conf</span><br> echo &quot;requirepass $PASSWD&quot; &gt;&gt; $INSTALL_DIR/redis.conf echo &quot;masterauth $PASSWD&quot; &gt;&gt; $INSTALL_DIR/redis.conf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">修改绑定ip地址</span><br> sed -i &#x27;s/bind 127.0.0.1/bind 0.0.0.0/g&#x27; $INSTALL_DIR/redis.conf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">编译安装</span><br> make &amp;&amp; make test<br> echo -e &quot;如果没有提示:&quot;&quot;\033[32m All tests passed without errors! \033[0m 说明编译过 程中出现了错误,如果报错请手工处理后重新执行,请按任意键继续或按CTRL+C退出安装....&quot;<br> read ANSWER<br> make PREFIX=$INSTALL_DIR install<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">删除临时文件</span><br> rm -rf $INSTALL_DIR/tmp<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">添加环境变量至当前用户.bash_profile</span><br> echo &quot;export REDIS_HOME=$INSTALL_DIR&quot; &gt;&gt; ~/.bash_profile<br> echo &quot;export PATH=\$PATH:\$REDIS_HOME/bin:&quot; &gt;&gt; ~/.bash_profile source ~/.bash_profile<br> echo &quot;环境变量REDIS_HOME为:$REDIS_HOME&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">redis安装信息打印</span><br> echo &quot;#!/bin/sh&quot; &gt; $INSTALL_DIR/info.sh<br> echo &quot;#!/bin/sh&quot; &gt; $INSTALL_DIR/start.sh<br> echo &quot;#!/bin/sh&quot; &gt; $INSTALL_DIR/stop.sh<br> echo &quot;#!/bin/sh&quot; &gt; $INSTALL_DIR/restart.sh<br> echo &quot;&quot; &gt;&gt; $INSTALL_DIR/info.sh<br> echo &quot;&quot; &gt;&gt; $INSTALL_DIR/start.sh<br> echo &quot;&quot; &gt;&gt; $INSTALL_DIR/stop.sh<br> echo &quot;&quot; &gt;&gt; $INSTALL_DIR/restart.sh<br> echo &quot;source ~/.bash_profile&quot; &gt;&gt; $INSTALL_DIR/info.sh<br> echo &quot;source ~/.bash_profile&quot; &gt;&gt; $INSTALL_DIR/start.sh<br> echo &quot;source ~/.bash_profile&quot; &gt;&gt; $INSTALL_DIR/stop.sh<br> echo &quot;source ~/.bash_profile&quot; &gt;&gt; $INSTALL_DIR/restart.sh<br> echo &quot;Redis服务启动 $INSTALL_DIR/start.sh &quot;<br> echo &quot;echo \&quot;Redis服务启动 $INSTALL_DIR/start.sh \&quot;&quot; &gt;&gt; $INSTALL_DIR/info.sh echo &quot;Redis服务停止 $INSTALL_DIR/stop.sh&quot;<br> echo &quot;echo \&quot;Redis服务停止 $INSTALL_DIR/stop.sh \&quot;&quot; &gt;&gt; $INSTALL_DIR/info.sh<br> echo &quot;Redis服务重启 $INSTALL_DIR/restart.sh&quot;<br> echo &quot;echo \&quot;Redis服务重启 $INSTALL_DIR/restart.sh \&quot;&quot; &gt;&gt; $INSTALL_DIR/info.sh #初始化start.sh<br> echo &quot;nohup $INSTALL_DIR/bin/redis-server $INSTALL_DIR/redis.conf &gt; $INSTALL_DIR/redis.log &amp;&quot; &gt;&gt; $INSTALL_DIR/start.sh<br> echo &quot;echo \&quot; \&quot;&quot; &gt;&gt; $INSTALL_DIR/start.sh<br> echo &quot;tail -f $INSTALL_DIR/redis.log&quot; &gt;&gt; $INSTALL_DIR/start.sh<br><span class="hljs-meta prompt_"> #</span><span class="language-bash">初始化stop.sh</span><br> echo &quot;ps -ef|grep redis | grep -v grep | awk &#x27;&#123;print \$2&#125;&#x27; | xargs kill -9 &quot; &gt;&gt; $INSTALL_DIR/stop.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">初始化restart.sh</span><br> echo &quot;ps -ef|grep redis | grep -v grep | awk &#x27;&#123;print \$2&#125;&#x27; | xargs kill -9 &quot; &gt;&gt; $INSTALL_DIR/restart.sh<br> echo &quot;$INSTALL_DIR/bin/redis-server $INSTALL_DIR/redis.conf&quot; &gt;&gt; $INSTALL_DIR/restart.sh<br> echo &quot;echo \&quot; \&quot;&quot; &gt;&gt; $INSTALL_DIR/restart.sh<br> echo &quot;tail -f $INSTALL_DIR/redis.log&quot; &gt;&gt; $INSTALL_DIR/restart.sh<br><br>echo &quot;INFO:redis软件安装完毕,安装信息 $INSTALL_DIR/info.sh!&quot; <br>chmod 775 $INSTALL_DIR/*.sh<br><br>exit 0;<br></code></pre></td></tr></table></figure>
+
+<h5 id="预防keepalive脑裂，VIP是否漂移到备份主机"><a href="#预防keepalive脑裂，VIP是否漂移到备份主机" class="headerlink" title="预防keepalive脑裂，VIP是否漂移到备份主机"></a>预防keepalive脑裂，VIP是否漂移到备份主机</h5><p>脚本需要在备份主机上执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">检测 VIP 是否已漂移到本地主机</span><br><br>function check_vip_status() &#123;<br>  VIP=&quot;192.168.0.100&quot;  # 替换为实际的 VIP 地址<br>  IFACE=&quot;eth0&quot;         # 替换为实际的网络接口名称<br><br>  ip addr show dev $IFACE | grep -q $VIP<br>  if [ $? -eq 0 ]; then<br>    echo &quot;VIP $VIP is active on this host.&quot;<br>  else<br>    echo &quot;VIP $VIP is not active on this host!&quot;<br>    # 在此处执行相应的操作，例如禁用 Keepalived<br>    # systemctl stop keepalived<br>  fi<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">定期检测 VIP 状态</span><br><br>while true; do<br>  check_vip_status<br>  sleep 5  # 每隔 5 秒检测一次<br>done<br></code></pre></td></tr></table></figure>
+
+<h5 id="MySQL全量备份和增量备份脚本"><a href="#MySQL全量备份和增量备份脚本" class="headerlink" title="MySQL全量备份和增量备份脚本"></a>MySQL全量备份和增量备份脚本</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置备份目录</span><br>BACKUP_DIR=&quot;/path/to/backup/directory&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置MySQL数据库连接参数</span><br>DB_HOST=&quot;localhost&quot;<br>DB_PORT=&quot;3306&quot;<br>DB_USER=&quot;your_username&quot;    #MySQL用户名<br>DB_PASS=&quot;your_password&quot;    #MySQL密码<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置备份保留天数</span><br>RETENTION_DAYS=7<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">获取当前日期和时间戳</span><br>CURRENT_DATE=$(date +%Y-%m-%d)<br>CURRENT_TIMESTAMP=$(date +%Y%m%d%H%M%S)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">执行全量备份命令</span><br>perform_full_backup() &#123;<br>    # 检查全量备份目录是否为空，如果为空，则执行全量备份<br>    if [ -z &quot;$(ls -A $BACKUP_DIR)&quot; ]; then<br>        echo &quot;Performing initial full backup...&quot;<br>        innobackupex --user=$DB_USER --password=$DB_PASS --host=$DB_HOST --port=$DB_PORT --no-timestamp $BACKUP_DIR<br>    else<br>        echo &quot;Skipping full backup as the backup directory is not empty.&quot;<br>    fi<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">执行增量备份命令</span><br>perform_incremental_backup() &#123;<br>    # 使用当前时间戳作为增量备份文件名<br>    INCREMENTAL_BACKUP_DIR=&quot;$BACKUP_DIR/incremental/$CURRENT_TIMESTAMP&quot;<br><br>    # 检查全量备份目录是否存在，如果不存在，则执行全量备份<br>    if [ -z &quot;$(ls -A $BACKUP_DIR)&quot; ]; then<br>        echo &quot;Performing initial full backup...&quot;<br>        innobackupex --user=$DB_USER --password=$DB_PASS --host=$DB_HOST --port=$DB_PORT --no-timestamp $BACKUP_DIR<br>    fi<br><br>    echo &quot;Performing incremental backup...&quot;<br>    innobackupex --user=$DB_USER --password=$DB_PASS --host=$DB_HOST --port=$DB_PORT --no-timestamp --incremental $INCREMENTAL_BACKUP_DIR --incremental-basedir=$BACKUP_DIR<br><br>    # 删除超出保留天数的备份文件<br>    find $BACKUP_DIR -type d -mtime +$RETENTION_DAYS -exec rm -rf &#123;&#125; \;<br>&#125;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">执行全量备份和增量备份</span><br>perform_full_backup<br>perform_incremental_backup<br><br>echo &quot;Backup completed successfully.&quot;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%BF%90%E7%BB%B4/" class="category-chain-item">运维</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%BF%90%E7%BB%B4/">#运维</a>
+      
+        <a href="/tags/shell/">#shell</a>
+      
+        <a href="/tags/%E8%84%9A%E6%9C%AC/">#脚本</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/18/docker/" title="关于Docker相关命令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于Docker相关命令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/17/jenkinsgitlab/" title="Jenkins+gitlab部署参考过程">
+                        <span class="hidden-mobile">Jenkins+gitlab部署参考过程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
