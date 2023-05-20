@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.aitojon.com/img/in/npvein.jpg">
 <meta property="article:published_time" content="2023-05-09T06:30:00.000Z">
-<meta property="article:modified_time" content="2023-05-19T13:59:51.957Z">
+<meta property="article:modified_time" content="2023-05-20T01:07:55.645Z">
 <meta property="article:author" content="AitoJon">
 <meta property="article:tag" content="运维">
 <meta property="article:tag" content="pve">
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          14k 字
+          15k 字
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          116 分钟
+          124 分钟
         
       </span>
     
@@ -365,6 +365,22 @@
 
 <p>如果你已经用别人的脚本之类的修改过页面，请先用下面命令先回复官方设置之后，才可以运行本脚本</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt update &amp;&amp; apt reinstall pve-manager<br></code></pre></td></tr></table></figure>
+
+<h3 id="开IOMMU硬件直通"><a href="#开IOMMU硬件直通" class="headerlink" title="开IOMMU硬件直通"></a>开IOMMU硬件直通</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#编辑grub，请不要盲目改。根据自己的环境，选择设置</span><br>vi /etc/default/grub<br><span class="hljs-comment">#在里面找到：</span><br>GRUB_CMDLINE_LINUX_DEFAULT=<span class="hljs-string">&quot;quiet&quot;</span><br><span class="hljs-comment">#然后修改为：</span><br>GRUB_CMDLINE_LINUX_DEFAULT=<span class="hljs-string">&quot;quiet intel_iommu=on iommu=pt&quot;</span><br><span class="hljs-comment">#如果是amd cpu请改为：</span><br>GRUB_CMDLINE_LINUX_DEFAULT=<span class="hljs-string">&quot;quiet amd_iommu=on iommu=pt&quot;</span><br><span class="hljs-comment">#如果是需要显卡直通，建议在cmdline再加一句video=vesafb:off video=efifb:off video=simplefb:off，加了之后，pve重启进内核后停留在一个画面，这是正常情况</span><br>GRUB_CMDLINE_LINUX_DEFAULT=<span class="hljs-string">&quot;quiet amd_iommu=on iommu=pt video=vesafb:off video=efifb:off video=simplefb:off&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/post/npve/npve6.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>修改完成之后，直接更新后重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">update-grub<br>update-initramfs -u<br>reboot<br></code></pre></td></tr></table></figure>
+
+<p>注意：如果此方法还不能开启iommu，请修改 &#x2F;etc&#x2F;kernel&#x2F;cmdline文件，并且使用<code>proxmox-boot-tool refresh</code> 更新启动项</p>
+<h3 id="验证是否开启iommu"><a href="#验证是否开启iommu" class="headerlink" title="验证是否开启iommu"></a>验证是否开启iommu</h3><p>重启之后，在终端输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">dmesg | grep iommu<br></code></pre></td></tr></table></figure>
+
+<p>出现如下例子。则代表成功</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">[ <span class="hljs-number">1.341100</span>] pci <span class="hljs-number">0000</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00.0</span>: Adding to iommu <span class="hljs-keyword">group</span> <span class="hljs-title">0</span><br>[ <span class="hljs-number">1.341116</span>] pci <span class="hljs-number">0000</span>:<span class="hljs-number">00</span>:<span class="hljs-number">01.0</span>: Adding to iommu <span class="hljs-keyword">group</span> <span class="hljs-title">1</span><br>[ <span class="hljs-number">1.341126</span>] pci <span class="hljs-number">0000</span>:<span class="hljs-number">00</span>:<span class="hljs-number">02.0</span>: Adding to iommu <span class="hljs-keyword">group</span> <span class="hljs-title">2</span><br>[ <span class="hljs-number">1.341137</span>] pci <span class="hljs-number">0000</span>:<span class="hljs-number">00</span>:<span class="hljs-number">14.0</span>: Adding to iommu <span class="hljs-keyword">group</span> <span class="hljs-title">3</span><br>[ <span class="hljs-number">1.341146</span>] pci <span class="hljs-number">0000</span>:<span class="hljs-number">00</span>:<span class="hljs-number">17.0</span>: Adding to iommu <span class="hljs-keyword">group</span> <span class="hljs-title">4</span><br></code></pre></td></tr></table></figure>
+
+<p>此时输入命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">find /sys/kernel/iommu_groups/ -<span class="hljs-built_in">type</span> l <br><span class="hljs-comment">#出现很多直通组，就代表成功了。如果没有任何东西，就是没有开启</span><br></code></pre></td></tr></table></figure>
                 
               </div>
             
