@@ -16,25 +16,26 @@
   <meta name="author" content="AitoJon">
   <meta name="keywords" content="aitojon">
   
-    <meta name="description" content="Docker三个基本概念容器（container）镜像（image）仓库（registry）  Docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等； 容器在镜像之上添加一个可读写层，构成一个新的容器； 镜像仓库是一个集中的存储，分发镜像的服务。  Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux内核限制进程">
+    <meta name="description" content="前言Intel GVT-g是显卡虚拟化技术，不同于PCI-E设备直通，GVT-g可以虚拟出多个虚拟机的GPU，从而有效地在虚拟机中提供接近宿主机的图形性能，并且仍然让主机正常使用虚拟化的GPU。 简单的说就是把一个显卡拆成好多个分别给不同虚拟机使用。 实验环境：    类型 详细信息    CPU I5 8400   主板 华擎 Z370M Pro4   内存 64G   板载M.2 西数 SN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Docker管理命令，Dockerfile关键字">
-<meta property="og:url" content="http://www.aitojon.com/2023/05/18/docker/index.html">
+<meta property="og:title" content="PVE开启核显虚拟化Intel GVT-g并修改显存实现多vGPU">
+<meta property="og:url" content="http://www.aitojon.com/2023/05/27/pvegvt/index.html">
 <meta property="og:site_name" content="AitoJon">
-<meta property="og:description" content="Docker三个基本概念容器（container）镜像（image）仓库（registry）  Docker镜像是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等； 容器在镜像之上添加一个可读写层，构成一个新的容器； 镜像仓库是一个集中的存储，分发镜像的服务。  Docker利用Namespace做资源隔离，用Cgroups做资源限制，Cgroups是Linux内核限制进程">
+<meta property="og:description" content="前言Intel GVT-g是显卡虚拟化技术，不同于PCI-E设备直通，GVT-g可以虚拟出多个虚拟机的GPU，从而有效地在虚拟机中提供接近宿主机的图形性能，并且仍然让主机正常使用虚拟化的GPU。 简单的说就是把一个显卡拆成好多个分别给不同虚拟机使用。 实验环境：    类型 详细信息    CPU I5 8400   主板 华擎 Z370M Pro4   内存 64G   板载M.2 西数 SN">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.aitojon.com/img/in/dockerin.jpg">
-<meta property="article:published_time" content="2023-05-18T07:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-27T10:04:41.478Z">
+<meta property="og:image" content="http://www.aitojon.com/img/in/pvegvtin.jpg">
+<meta property="article:published_time" content="2023-05-27T07:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-27T09:10:37.423Z">
 <meta property="article:author" content="AitoJon">
-<meta property="article:tag" content="docker">
 <meta property="article:tag" content="运维">
+<meta property="article:tag" content="PVE">
+<meta property="article:tag" content="GVT-g">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://www.aitojon.com/img/in/dockerin.jpg">
+<meta name="twitter:image" content="http://www.aitojon.com/img/in/pvegvtin.jpg">
   
   
   
-  <title>关于Docker管理命令，Dockerfile关键字 - AitoJon</title>
+  <title>PVE开启核显虚拟化Intel GVT-g并修改显存实现多vGPU - AitoJon</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="关于Docker管理命令，Dockerfile关键字"></span>
+            <span id="subtitle" data-typed-text="PVE开启核显虚拟化Intel GVT-g并修改显存实现多vGPU"></span>
           
         </div>
 
@@ -239,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-18 15:00" pubdate>
-          2023年5月18日 下午
+        <time datetime="2023-05-27 15:00" pubdate>
+          2023年5月27日 下午
         </time>
       </span>
     
@@ -251,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          2.6k 字
         
       </span>
     
@@ -262,7 +263,7 @@
         
         
         
-          21 分钟
+          22 分钟
         
       </span>
     
@@ -300,353 +301,79 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">关于Docker管理命令，Dockerfile关键字</h1>
+            <h1 style="display: none">PVE开启核显虚拟化Intel GVT-g并修改显存实现多vGPU</h1>
             
             
               <div class="markdown-body">
                 
                 <hr>
-<h4 id="Docker三个基本概念"><a href="#Docker三个基本概念" class="headerlink" title="Docker三个基本概念"></a>Docker三个基本概念</h4><p><strong>容器（container）镜像（image）仓库（registry）</strong></p>
-<ul>
-<li><strong>Docker镜像</strong>是一个独立的文件系统，由若干只读层构成。提供容器运行时所需的资源，配置等；</li>
-<li><strong>容器</strong>在镜像之上添加一个可读写层，构成一个新的容器；</li>
-<li><strong>镜像仓库</strong>是一个集中的存储，分发镜像的服务。</li>
-</ul>
-<p><strong>Docker利用Namespace做资源隔离，用Cgroups做资源限制</strong>，Cgroups是Linux内核限制进程所使用资源的机制,可以对 cpu 内存等资源实现精细化控制。</p>
-<p><strong>Docker file</strong> 用来<strong>构建镜像的文本文件</strong>，文本内容包含了构建镜像所需的指令和说明。</p>
-<h4 id="Docker管理命令"><a href="#Docker管理命令" class="headerlink" title="Docker管理命令"></a>Docker管理命令</h4><table>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Intel GVT-g是显卡虚拟化技术，不同于PCI-E设备直通，GVT-g可以虚拟出多个虚拟机的GPU，从而有效地在虚拟机中提供接近宿主机的图形性能，并且仍然让主机正常使用虚拟化的GPU。</p>
+<p>简单的说就是把一个显卡拆成好多个分别给不同虚拟机使用。</p>
+<p>实验环境：</p>
+<table>
 <thead>
 <tr>
-<th align="left">命令格式</th>
-<th align="left">参数选项</th>
-<th align="left">说明</th>
+<th>类型</th>
+<th>详细信息</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">docker info</td>
-<td align="left"></td>
-<td align="left">查看 docker 的运行信息</td>
+<td>CPU</td>
+<td>I5 8400</td>
 </tr>
 <tr>
-<td align="left">docker version</td>
-<td align="left"></td>
-<td align="left">查看服务器和客户端版本</td>
+<td>主板</td>
+<td>华擎 Z370M Pro4</td>
 </tr>
 <tr>
-<td align="left">docker images</td>
-<td align="left"></td>
-<td align="left">查看本机镜像</td>
+<td>内存</td>
+<td>64G</td>
 </tr>
 <tr>
-<td align="left">docker search 关键字</td>
-<td align="left"></td>
-<td align="left">从官方仓库查找镜像</td>
+<td>板载M.2</td>
+<td>西数 SN770、512G</td>
 </tr>
 <tr>
-<td align="left">docker pull</td>
-<td align="left"></td>
-<td align="left">下载镜像</td>
-</tr>
-<tr>
-<td align="left">docker push</td>
-<td align="left"></td>
-<td align="left">上传镜像</td>
-</tr>
-<tr>
-<td align="left">docker login</td>
-<td align="left"></td>
-<td align="left">登录镜像仓库</td>
-</tr>
-<tr>
-<td align="left">docker logout</td>
-<td align="left"></td>
-<td align="left">登出镜像仓库</td>
-</tr>
-<tr>
-<td align="left">docker save -o backup.tar</td>
-<td align="left">-o 备份文件名</td>
-<td align="left">备份镜像为tar包</td>
-</tr>
-<tr>
-<td align="left">docker load -i backup.tar</td>
-<td align="left">-i 备份文件名</td>
-<td align="left">导入备份的镜像文件</td>
-</tr>
-<tr>
-<td align="left">docker history</td>
-<td align="left">–no-trunc 完整显示</td>
-<td align="left">查看镜像的制作历史</td>
-</tr>
-<tr>
-<td align="left">docker inspect</td>
-<td align="left">-f 指定具体节点</td>
-<td align="left">查看对象的详细信息</td>
-</tr>
-<tr>
-<td align="left">docker tag</td>
-<td align="left"></td>
-<td align="left">创建新的镜像名称和标签</td>
-</tr>
-<tr>
-<td align="left">docker rmi</td>
-<td align="left"></td>
-<td align="left">删除镜像</td>
-</tr>
-<tr>
-<td align="left">docker run</td>
-<td align="left">-i 交互式，-t 分配终端</td>
-<td align="left">运行一个新容器</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-d 放在后台运行</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–rm 临时容器，容器结束后会被删除</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-h 主机名，-e 变量</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–name 容器名</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–restart&#x3D;[no,always]</td>
-<td align="left">容器重启策略</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">–link 容器名:别名</td>
-<td align="left">添加 hosts 解析</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-m, –cpus, –cpuset-cpus</td>
-<td align="left">设置内存、cpu使用限制及亲和性</td>
-</tr>
-<tr>
-<td align="left">docker create</td>
-<td align="left">参数同 docker run</td>
-<td align="left">创建容器，但不启动运行</td>
-</tr>
-<tr>
-<td align="left">docker ps</td>
-<td align="left">-a 显示所有容器</td>
-<td align="left">查看容器进程</td>
-</tr>
-<tr>
-<td align="left"></td>
-<td align="left">-q 只显示容器id</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">docker rm</td>
-<td align="left">-f 强制删除</td>
-<td align="left">删除容器</td>
-</tr>
-<tr>
-<td align="left">docker start|stop|restart</td>
-<td align="left"></td>
-<td align="left">启动、停止、重启容器</td>
-</tr>
-<tr>
-<td align="left">docker cp</td>
-<td align="left"></td>
-<td align="left">拷贝文件到容器&#x2F;从容器拷贝文件</td>
-</tr>
-<tr>
-<td align="left">docker exec -it</td>
-<td align="left"></td>
-<td align="left">进入容器内，启动新进程</td>
-</tr>
-<tr>
-<td align="left">docker attach</td>
-<td align="left">[ctrl+p, ctrl+q] 退出，不会终止容器</td>
-<td align="left">进入一个容器的启动程序</td>
-</tr>
-<tr>
-<td align="left">docker logs</td>
-<td align="left"></td>
-<td align="left">查看容器终端显示信息</td>
-</tr>
-<tr>
-<td align="left">docker port</td>
-<td align="left"></td>
-<td align="left">查看容器的端口映射信息</td>
-</tr>
-<tr>
-<td align="left">docker kill</td>
-<td align="left">–signal&#x3D;信号名称</td>
-<td align="left">像容器发送信号</td>
-</tr>
-<tr>
-<td align="left">docker pause</td>
-<td align="left"></td>
-<td align="left">暂停容器</td>
-</tr>
-<tr>
-<td align="left">docker unpause</td>
-<td align="left"></td>
-<td align="left">恢复暂停的容器</td>
-</tr>
-<tr>
-<td align="left">docker update</td>
-<td align="left">不能超过 –memory-swap 的值，-1表示无限</td>
-<td align="left">更改容器配置策略（资源限制）</td>
-</tr>
-<tr>
-<td align="left">docker stats</td>
-<td align="left"></td>
-<td align="left">查看容器对资源的占用情况</td>
-</tr>
-<tr>
-<td align="left">docker top</td>
-<td align="left"></td>
-<td align="left">查看容器内运行的进程</td>
-</tr>
-<tr>
-<td align="left">docker diff</td>
-<td align="left">A 增加、D 删除、C 变化</td>
-<td align="left">根据镜像排查文件系统变化</td>
-</tr>
-<tr>
-<td align="left">docker wait</td>
-<td align="left"></td>
-<td align="left">阻塞直到容器停止，返回退出码</td>
-</tr>
-<tr>
-<td align="left">docker rename <c_name> <n_name></td>
-<td align="left"></td>
-<td align="left">改变容器名称</td>
-</tr>
-<tr>
-<td align="left">docker export</td>
-<td align="left">-o 备份文件名</td>
-<td align="left">备份容器的 &#x2F; 目录为 tar 文件</td>
-</tr>
-<tr>
-<td align="left">docker import backup.tar</td>
-<td align="left">-c 可以指定Dockerfile语法的命令</td>
-<td align="left">导入文件到空 &#x2F; 目录，没有任何配置</td>
-</tr>
-<tr>
-<td align="left">docker commit</td>
-<td align="left"></td>
-<td align="left">把容器做成镜像</td>
-</tr>
-<tr>
-<td align="left">docker build</td>
-<td align="left">-f 可以指定 dockerfile 的文件名称</td>
-<td align="left">根据Dockerfile打包制作镜像</td>
+<td>PVE版本</td>
+<td>7.4</td>
 </tr>
 </tbody></table>
-<h4 id="Dockerfile关键字大全"><a href="#Dockerfile关键字大全" class="headerlink" title="Dockerfile关键字大全"></a>Dockerfile关键字大全</h4><table>
-<thead>
-<tr>
-<th>关键字</th>
-<th>作用</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FROM</td>
-<td>指定父镜像</td>
-<td>指定dockerfile基于那个image构建</td>
-</tr>
-<tr>
-<td>MAINTAINER</td>
-<td>作者信息</td>
-<td>声明作者信息</td>
-</tr>
-<tr>
-<td>LABEL</td>
-<td>标签</td>
-<td>和MAINTAINER类似，用来标明dockerfile的标签，可以使用Label代替Maintainer，最终都是在docker image基本信息中可以查看</td>
-</tr>
-<tr>
-<td>RUN</td>
-<td>执行命令</td>
-<td>执行一段命令 默认是&#x2F;bin&#x2F;sh</td>
-</tr>
-<tr>
-<td>CMD</td>
-<td>容器启动命令</td>
-<td>提供启动容器时候的默认命令和ENTRYPOINT配合使用</td>
-</tr>
-<tr>
-<td>ENTRYPOINT</td>
-<td>入口</td>
-<td>一般在制作一些执行就关闭的容器中会使用</td>
-</tr>
-<tr>
-<td>COPY</td>
-<td>复制文件</td>
-<td>build的时候复制文件到image中。推荐copy指令，只能执行docker build所在主机上读取复制资源到镜像。add复制文件可以可以来源于远程链接，如果是压缩文件还会自动解压</td>
-</tr>
-<tr>
-<td>ADD</td>
-<td>添加文件</td>
-<td>build的时候添加文件到image中，不仅仅局限于当前build上下文 可以来源于远程服务</td>
-</tr>
-<tr>
-<td>ENV</td>
-<td>环境变量</td>
-<td>指定build时候的环境变量 可以在启动的容器的时候 通过-e覆盖</td>
-</tr>
-<tr>
-<td>ARG</td>
-<td>构建参数</td>
-<td>构建参数，只在构建的时候使用的参数。如果有ENV，那么ENV的相同名字的值始终覆盖arg的参数</td>
-</tr>
-<tr>
-<td>VOLUME</td>
-<td>定义外部可以挂载的数据卷</td>
-<td>指定build的image那些目录可以启动的时候挂载到文件系统中，启动容器的时候使用 -v 绑定</td>
-</tr>
-<tr>
-<td>EXPOSE</td>
-<td>暴露端口</td>
-<td>定义容器运行的时候监听的端口，启动容器的使用-p来绑定暴露端口。格式: EXPOSE 8080 或者 EXPOSE 8080&#x2F;udp</td>
-</tr>
-<tr>
-<td>WORKDIR</td>
-<td>工作目录</td>
-<td>指定容器内部的工作目录，如果没有创建则自动创建。如果指定&#x2F; 使用的是绝对地址 如果不是&#x2F;开头那么是在上一条workdir的路径的相对路径</td>
-</tr>
-<tr>
-<td>USER</td>
-<td>指定执行用户</td>
-<td>指定build或者启动的时候，用户 在RUN CMD ENTRYPONT执行的时候的用户</td>
-</tr>
-<tr>
-<td>HEALTHCHECK</td>
-<td>健康检查</td>
-<td>指定监测当前容器的健康监测的命令，基本上没用，因为很多时候，应用本身有健康监测机制</td>
-</tr>
-<tr>
-<td>ONBUILD</td>
-<td>触发器</td>
-<td>当存在ONBUILD关键字的镜像作为基础镜像的时候，当执行FROM完成之后，会执行 ONBUILD的命令，但是不影响当前镜像，用处也不怎么大</td>
-</tr>
-<tr>
-<td>STOPSIGNAL</td>
-<td>发送信号量到宿主机</td>
-<td>该STOPSIGNAL指令设置将发送到容器的系统调用信号以退出。</td>
-</tr>
-<tr>
-<td>SHELL</td>
-<td>指定执行脚本的shell</td>
-<td>指定RUN CMD ENTRYPOINT 执行命令的时候 使用的shell</td>
-</tr>
-</tbody></table>
+<p>为了实现更多vGPU，需要给核显分配更多的显存。虽然主板给出了显存的设置选项，最大是1024MB。但即使设置了1024MB，在pve下还是Menmory Size 还是 256M。也就是在PVE下可用的GVTg数量少的可怜。</p>
+<p><img src="/img/post/pvegvt/pvegvt1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvegvt/pvegvt2.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvegvt/pvegvt3.jpg" srcset="/img/loading.gif" lazyload></p>
+<h1 id="插曲：在PVE开启显卡虚拟化intel-GVT-g"><a href="#插曲：在PVE开启显卡虚拟化intel-GVT-g" class="headerlink" title="插曲：在PVE开启显卡虚拟化intel GVT-g"></a>插曲：在PVE开启显卡虚拟化intel GVT-g</h1><p>注意，intel gvt-g技术，只支持5代以上桌面CPU或者4代以上服务器CPU。</p>
+<p>不支持11代以上CPU。J3XXX似乎支持，请自测。</p>
+<p>脚本对zfs和btrfs启动的支持有问题，请勿用。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span><br><br>grub_check()&#123;<br>    if [ -e /etc/kernel/proxmox-boot-uuids ]<br>    then<br>    echo &quot;引导为Systemd-boot&quot;<br>    echo &quot;正在修改cmdline&quot;<br>    edit_cmdline<br>    else<br>    echo &quot;引导为grub&quot;<br>    echo &quot;正在修改grub&quot;    <br>    edit_grub<br>    fi<br>&#125;<br><br>modiy_modules()&#123;<br>    echo &quot;正在修改内核参数&quot;<br>    cp /etc/modules /opt/backup/modules_$(date +%s)<br>    sed -i &#x27;/kvmgt/d&#x27; /etc/modules<br>    echo kvmgt &gt;&gt; /etc/modules<br>    sed -i &#x27;/915/d&#x27; /etc/modprobe.d/*<br>    sed -i &#x27;/8086/d&#x27; /etc/modprobe.d/*<br>    update-initramfs -u &gt; /dev/null 2&gt;&amp;1<br>    echo &quot;内核参数修改完成&quot;<br>&#125;<br><br>edit_cmdline()&#123;<br>    cp /etc/kernel/cmdline /opt/backup/cmdline_$(date +%s)<br>    echo  `cat /etc/kernel/cmdline` &#x27;quiet intel_iommu=on i915.enable_gvt=1&#x27; &gt; /etc/kernel/cmdline<br>    proxmox-boot-tool refresh &gt; /dev/null 2&gt;&amp;1<br>    echo &quot;cmdline修改完成&quot;<br>&#125;<br>edit_grub()&#123;<br>    cp /etc/default/grub  /opt/backup/grub_$(date +%s)<br>    sed -i &#x27;/GRUB_CMDLINE_LINUX_DEFAULT/d&#x27; /etc/default/grub<br>    sed -i &#x27;/GRUB_CMDLINE_LINUX/i GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet intel_iommu=on i915.enable_gvt=1&quot;&#x27; /etc/default/grub<br>    update-grub &gt; /dev/null 2&gt;&amp;1<br>    echo &quot;grub修改完成&quot;<br>&#125;<br><br>echo &quot;这是一个自动配置gvt-g的脚本&quot;<br>echo &quot;本脚本不检测硬件类型，请自己确保符合条件&quot;<br><br>read -p &quot;请按y/Y继续&quot; configure<br>if [ $configure = &quot;y&quot; ] || [ $configure = &quot;Y&quot; ] <br>then<br>echo &quot;开始检测引导类型&quot;<br>mkdir /opt/backup &gt; /dev/null 2&gt;&amp;1<br>grub_check<br>else<br>echo &quot;输入错误，脚本退出&quot;<br>exit 0<br>fi<br>modiy_modules<br>echo &quot;脚本执行完成，请重启&quot;<br>echo &quot;其中grub和modules文件已经备份到/opt/backup目录下&quot;<br>echo &quot;重启之后，请运行命令 lsmod|grep kvmgt 有输出即代表成功&quot;<br></code></pre></td></tr></table></figure>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h3 id="1-使用”UEFI-Tool“工具找到设置对应的模块"><a href="#1-使用”UEFI-Tool“工具找到设置对应的模块" class="headerlink" title="1.使用”UEFI Tool“工具找到设置对应的模块"></a>1.使用”UEFI Tool“工具找到设置对应的模块</h3><p>有能力的先提取一下当前版本的BIOS，没能力的去官网找到和本机BIOS相同的更新文件。或者直接去官网下载了最新版的BIOS更新文件并更新BIOS。</p>
+<p><img src="/img/post/pvegvt/pvegvt4.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>打开BIOS更新文件，然后按<code>Ctrl+F</code>打开搜索页面，切换到<code>text</code>选项卡，搜索<code>aperture size</code></p>
+<p><img src="/img/post/pvegvt/pvegvt5.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>点击OK，进行搜索，下方将展示搜索结果。</p>
+<p><img src="/img/post/pvegvt/pvegvt6.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>双击搜索结果，自动跳转到对应模块。</p>
+<p><img src="/img/post/pvegvt/pvegvt7.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>右键，选择 Extract body，将导出的efi文件保存一下。</p>
+<p><img src="/img/post/pvegvt/pvegvt8.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-使用“IRFExtractor”工具转格式"><a href="#2-使用“IRFExtractor”工具转格式" class="headerlink" title="2.使用“IRFExtractor”工具转格式"></a>2.使用“IRFExtractor”工具转格式</h3><p>使用<code>IRFExtractor</code>打开上一步另存的<code>*.efi</code>文件</p>
+<p><img src="/img/post/pvegvt/pvegvt9.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>使用文本编辑器打开这个<code>txt</code>文件，搜索<code>aperture</code></p>
+<p><img src="/img/post/pvegvt/pvegvt10.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>上图中的<code>0x88A</code>就是这个设置的偏移值，下面就是可供调节的几个选项。建议这一步拍个照。比如这边的默认值就是256M，选项值为<code>0x1</code></p>
+<h1 id="开始修改"><a href="#开始修改" class="headerlink" title="开始修改"></a>开始修改</h1><p>可以使用ventoy做启动引导，需要放入uefi引导文件<a target="_blank" rel="noopener" href="https://github.com/datasone/grub-mod-setup_var/releases/tag/1.4">下载链接</a></p>
+<p>重启电脑，选择U盘引导，选择uefi引导文件，进入grub命令行模式</p>
+<p><img src="/img/post/pvegvt/pvegvt11.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvegvt/pvegvt12.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-验证偏移地址是否正确"><a href="#1-验证偏移地址是否正确" class="headerlink" title="1.验证偏移地址是否正确"></a>1.验证偏移地址是否正确</h3><p>输入<code>setup_var_3 0x88A</code>，默认情况下返回的是<code>0x1</code>即256M</p>
+<p>那就说明这个地方就是修改<code>aperture size</code>的地方。</p>
+<p><img src="/img/post/pvegvt/pvegvt13.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-修改aperture-size"><a href="#2-修改aperture-size" class="headerlink" title="2.修改aperture size"></a>2.修改<code>aperture size</code></h3><p><img src="/img/post/pvegvt/pvegvt14.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvegvt/pvegvt15.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>输入<code>setup_var 0x88a 0x7</code>，将<code>aperture size</code>修改为1024M。验证后reboot重启</p>
+<h1 id="验证结果"><a href="#验证结果" class="headerlink" title="验证结果"></a>验证结果</h1><p><img src="/img/post/pvegvt/pvegvt16.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/post/pvegvt/pvegvt17.jpg" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -680,9 +407,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/docker/">#docker</a>
-      
         <a href="/tags/%E8%BF%90%E7%BB%B4/">#运维</a>
+      
+        <a href="/tags/PVE/">#PVE</a>
+      
+        <a href="/tags/GVT-g/">#GVT-g</a>
       
     </div>
   
@@ -696,18 +425,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/19/dockercompose/" title="关于Docker compose安装，命令，案例">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">关于Docker compose安装，命令，案例</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/18/script/" title="Liunx常用脚本案例">
-                        <span class="hidden-mobile">Liunx常用脚本案例</span>
+                      <a href="/2023/05/19/dockercompose/" title="关于Docker compose安装，命令，案例">
+                        <span class="hidden-mobile">关于Docker compose安装，命令，案例</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
